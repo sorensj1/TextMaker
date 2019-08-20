@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { TeamsModule } from './teams';
+import { ProjectsModule } from './projects';
 import { appRoutes } from './app.routes';
+import { TextCombinerModule } from './text-combiner/text-combiner.module';
 
 @NgModule({
 	declarations: [
@@ -12,10 +13,9 @@ import { appRoutes } from './app.routes';
 	],
 	imports: [
 		BrowserModule,
-		TeamsModule,
-		RouterModule.forRoot(
-			appRoutes
-		)
+		ProjectsModule,
+		TextCombinerModule,
+		RouterModule.forRoot(appRoutes)
 	],
 	providers: [],
 	bootstrap: [AppComponent]

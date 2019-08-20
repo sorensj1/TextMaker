@@ -1,8 +1,9 @@
 import { Routes } from '@angular/router';
-import { TeamsComponent } from './teams/teams.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { TextCombinerComponent } from './text-combiner/text-combiner.component';
 
 export const appRoutes: Routes = [
-	{ path: 'teams', component: TeamsComponent },
-	{ path: 'teams/:name', component: TeamsComponent },
-	{ path: '', redirectTo: '/teams', pathMatch: 'full' },
+	{ path: 'projects', component: ProjectsComponent },
+	{ path: 'projects/:name', component: TextCombinerComponent },
+	{ path: '', redirectTo: '/projects', pathMatch: 'full' },
 ];
