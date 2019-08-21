@@ -16,7 +16,7 @@ export class TextDataService {
 						{
 							name: 'Guy, Some',
 							text: 'Some Guy',
-							isSelected: false
+							isSelected: true
 						},
 						{
 							name: 'Guy, Another',
@@ -26,14 +26,14 @@ export class TextDataService {
 						{
 							name: 'Else, Someone',
 							text: 'Someone Else',
-							isSelected: false
+							isSelected: true
 						}
 					],
 					isExclusive: false,
 					delimiter: ', '
 				},
 				{
-					name: 'Reasoning (Exclusive)',
+					name: 'Reasoning',
 					items: [
 						{
 							name: 'Not Bad',
@@ -60,7 +60,7 @@ export class TextDataService {
 						{
 							name: 'Lorem',
 							text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-							isSelected: false
+							isSelected: true
 						},
 						{
 							name: 'Quisque',

@@ -2,6 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { TextCombinerComponent } from './text-combiner.component';
 import { TextDataService } from '../shared/services';
+import { TextGroupModule } from './text-group';
+import { TextOutputModule } from './text-output';
+import { TextCombinerPipe } from './text-combiner.pipe';
 
 describe('TextCombinerComponent', () => {
 	let component: TextCombinerComponent;
@@ -25,7 +28,8 @@ describe('TextCombinerComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [TextCombinerComponent],
+			imports: [TextGroupModule, TextOutputModule],
+			declarations: [TextCombinerComponent, TextCombinerPipe],
 			providers: [
 				{ provide: ActivatedRoute, useValue: activatedRoute },
 				{ provide: TextDataService, useValue: textDataService }
