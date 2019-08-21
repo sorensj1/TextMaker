@@ -5,6 +5,7 @@ import { TextDataService } from '../shared/services';
 import { TextGroupModule } from './text-group';
 import { TextOutputModule } from './text-output';
 import { TextCombinerPipe } from './text-combiner.pipe';
+import { TextEditOptionsModule } from './text-edit-options';
 
 describe('TextCombinerComponent', () => {
 	let component: TextCombinerComponent;
@@ -28,7 +29,7 @@ describe('TextCombinerComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			imports: [TextGroupModule, TextOutputModule],
+			imports: [TextGroupModule, TextOutputModule, TextEditOptionsModule],
 			declarations: [TextCombinerComponent, TextCombinerPipe],
 			providers: [
 				{ provide: ActivatedRoute, useValue: activatedRoute },
@@ -44,9 +45,27 @@ describe('TextCombinerComponent', () => {
 		fixture.detectChanges();
 	});
 
-	it('should create', () => {
-		expect(activatedRoute.snapshot.paramMap.get).toHaveBeenCalledWith('name');
-		expect(textDataService.get).toHaveBeenCalledWith('MyProjectName');
-		expect(component.project.name).toBe('My Project');
+	describe('#ngOnInit', () => {
+		it('should create', () => {
+			expect(activatedRoute.snapshot.paramMap.get).toHaveBeenCalledWith('name');
+			expect(textDataService.get).toHaveBeenCalledWith('MyProjectName');
+			expect(component.project.name).toBe('My Project');
+		});
+	});
+
+	describe('#onEditClick', () => {
+		it('should set isEditing to true', () => {
+			component.isEditing = false;
+			component.onEditClick();
+			expect(component.isEditing).toBe(true);
+		});
+	});
+
+	describe('#onEditorClosed', () => {
+		it('should set isEditing to false', () => {
+			component.isEditing = true;
+			component.onEditorClosed();
+			expect(component.isEditing).toBe(false);
+		});
 	});
 });

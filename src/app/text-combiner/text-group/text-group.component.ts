@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TextItemGroup, TextItem } from 'src/app/shared/models';
 
 @Component({
@@ -8,7 +8,11 @@ import { TextItemGroup, TextItem } from 'src/app/shared/models';
 })
 export class TextGroupComponent implements OnInit {
 
+	@Input() isEditing: boolean;
+
 	@Input() group: TextItemGroup;
+
+	@Output() groupChange = new EventEmitter<TextItemGroup>();
 
 	constructor() { }
 
@@ -17,6 +21,7 @@ export class TextGroupComponent implements OnInit {
 
 	onTextItemClick(item: TextItem) {
 		item.isSelected = !item.isSelected;
+		this.groupChange.emit(this.group);
 	}
 
 }

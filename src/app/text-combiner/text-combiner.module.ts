@@ -5,13 +5,15 @@ import { TextCombinerComponent } from './text-combiner.component';
 import { TextGroupModule } from './text-group';
 import { TextOutputModule } from './text-output';
 import { TextCombinerPipe } from './text-combiner.pipe';
+import { TextEditOptionsModule } from './text-edit-options';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		ButtonModule,
 		TextGroupModule,
-		TextOutputModule
+		TextOutputModule,
+		TextEditOptionsModule
 	],
 	declarations: [
 		TextCombinerComponent,

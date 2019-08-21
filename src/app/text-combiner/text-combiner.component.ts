@@ -14,6 +14,8 @@ export class TextCombinerComponent implements OnInit {
 
 	project: Project;
 
+	isEditing = false;
+
 	constructor(
 		private route: ActivatedRoute,
 		private textDataService: TextDataService
@@ -23,4 +25,13 @@ export class TextCombinerComponent implements OnInit {
 		const name = this.route.snapshot.paramMap.get('name');
 		this.project = this.textDataService.get(name);
 	}
+
+	onEditClick() {
+		this.isEditing = true;
+	}
+
+	onEditorClosed() {
+		this.isEditing = false;
+	}
+
 }

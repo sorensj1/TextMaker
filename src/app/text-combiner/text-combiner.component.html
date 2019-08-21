@@ -1,4 +1,5 @@
-<button pButton type="button" label="Edit"></button>
+<button pButton type="button" *ngIf="!isEditing" label="Edit" icon="pi pi-cog" (click)="onEditClick()"></button>
 <div class="project-name">{{ project.name }}</div>
-<app-text-group *ngFor="let group of project.groups" [group]="group"></app-text-group>
-<app-text-output [text]="project | textCombiner"></app-text-output>
+<app-text-group *ngFor="let group of project.groups" [isEditing]="isEditing" [(group)]="group"></app-text-group>
+<app-text-output *ngIf="!isEditing" [text]="project | textCombiner"></app-text-output>
+<app-text-edit-options *ngIf="isEditing" (closed)="onEditorClosed()"></app-text-edit-options>
