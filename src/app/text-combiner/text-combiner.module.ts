@@ -4,8 +4,8 @@ import { ButtonModule } from 'primeng/button';
 import { TextCombinerComponent } from './text-combiner.component';
 import { TextGroupModule } from './text-group';
 import { TextOutputModule } from './text-output';
-import { TextCombinerPipe } from './text-combiner.pipe';
 import { TextEditOptionsModule } from './text-edit-options';
+import { TextCombinerService } from './text-combiner.service';
 
 @NgModule({
 	imports: [
@@ -16,11 +16,13 @@ import { TextEditOptionsModule } from './text-edit-options';
 		TextEditOptionsModule
 	],
 	declarations: [
-		TextCombinerComponent,
-		TextCombinerPipe
+		TextCombinerComponent
 	],
 	exports: [
 		TextCombinerComponent
+	],
+	providers: [
+		TextCombinerService
 	]
 })
 export class TextCombinerModule { }

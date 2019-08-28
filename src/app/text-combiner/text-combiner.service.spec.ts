@@ -1,8 +1,8 @@
-import { TextCombinerPipe } from './text-combiner.pipe';
+import { TextCombinerService } from './text-combiner.service';
 import { Project } from '../shared/models';
 
-describe('Pipe: TextCombiner', () => {
-	let pipe: TextCombinerPipe;
+describe('Service: TextCombinerService', () => {
+	let service: TextCombinerService;
 
 	const myNewTeam: Project = {
 		name: 'My New Team',
@@ -48,15 +48,15 @@ describe('Pipe: TextCombiner', () => {
 	};
 
 	beforeEach(() => {
-		pipe = new TextCombinerPipe();
+		service = new TextCombinerService();
 	});
 	describe('#transform', () => {
 		it('should handle a null project', () => {
-			expect(pipe.transform(null)).toBe('');
+			expect(service.getCombinedText(null)).toBe('');
 		});
 
 		it('should transform a project', () => {
-			expect(pipe.transform(myNewTeam)).toBe('The second item.The third item.');
+			expect(service.getCombinedText(myNewTeam)).toBe('The second item.The third item.');
 		});
 	});
 });

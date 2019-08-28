@@ -4,8 +4,8 @@ import { TextCombinerComponent } from './text-combiner.component';
 import { TextDataService } from '../shared/services';
 import { TextGroupModule } from './text-group';
 import { TextOutputModule } from './text-output';
-import { TextCombinerPipe } from './text-combiner.pipe';
 import { TextEditOptionsModule } from './text-edit-options';
+import { TextCombinerService } from './text-combiner.service';
 
 describe('TextCombinerComponent', () => {
 	let component: TextCombinerComponent;
@@ -30,10 +30,11 @@ describe('TextCombinerComponent', () => {
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
 			imports: [TextGroupModule, TextOutputModule, TextEditOptionsModule],
-			declarations: [TextCombinerComponent, TextCombinerPipe],
+			declarations: [TextCombinerComponent],
 			providers: [
 				{ provide: ActivatedRoute, useValue: activatedRoute },
-				{ provide: TextDataService, useValue: textDataService }
+				{ provide: TextDataService, useValue: textDataService },
+				TextCombinerService
 			]
 		})
 			.compileComponents();
