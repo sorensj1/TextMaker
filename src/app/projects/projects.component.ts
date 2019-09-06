@@ -9,6 +9,7 @@ import { TextDataService } from '../shared/services';
 export class ProjectsComponent implements OnInit {
 
 	projectNames: string[] = [];
+	isDialogShown = false;
 
 	constructor(
 		private textDataService: TextDataService
@@ -16,5 +17,9 @@ export class ProjectsComponent implements OnInit {
 
 	ngOnInit() {
 		this.projectNames = this.textDataService.getKeys();
+	}
+
+	onAddClick() {
+		this.isDialogShown = true;
 	}
 }
