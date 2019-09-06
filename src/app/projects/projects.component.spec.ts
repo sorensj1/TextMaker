@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProjectsComponent } from './projects.component';
+import { EditProjectModule } from './edit-project';
 
 describe('ProjectsComponent', () => {
 	let component: ProjectsComponent;
@@ -7,6 +8,7 @@ describe('ProjectsComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
+			imports: [EditProjectModule],
 			declarations: [ProjectsComponent]
 		})
 			.compileComponents();
@@ -18,7 +20,11 @@ describe('ProjectsComponent', () => {
 		fixture.detectChanges();
 	});
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
+	describe('#onAddClick', () => {
+		it('should set the dialog to appear', () => {
+			expect(component.isDialogShown).toBe(false);
+			component.onAddClick();
+			expect(component.isDialogShown).toBe(true);
+		});
 	});
 });

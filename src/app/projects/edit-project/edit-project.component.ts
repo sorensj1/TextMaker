@@ -21,7 +21,7 @@ export class EditProjectComponent implements OnInit {
 		this.isDisplayedChange.emit(this.isDisplayed);
 	}
 
-	onNoCLick() {
+	onNoClick() {
 		this.isDisplayed = false;
 		this.isDisplayedChange.emit(this.isDisplayed);
 	}
