@@ -1,6 +1,5 @@
-<app-edit-project [(isDisplayed)]="isDialogShown"></app-edit-project>
+<app-edit-project [(isDisplayed)]="isDialogShown" (projectSaved)="onProjectSaved($event)"></app-edit-project>
 <div *ngFor="let projectName of projectNames">
 	<a href="./projects/{{ projectName }}">{{ projectName }}</a>
 </div>
 <button pButton type="button" icon="pi pi-plus" (click)="onAddClick()"></button>
-

@@ -4,13 +4,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditProjectComponent } from './edit-project.component';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/components/button/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
 	imports: [
 		BrowserAnimationsModule,
 		CommonModule,
 		DialogModule,
-		ButtonModule
+		ButtonModule,
+		InputTextModule,
+		FormsModule
 	],
 	declarations: [EditProjectComponent],
 	exports: [EditProjectComponent]

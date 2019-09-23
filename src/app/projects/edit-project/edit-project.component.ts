@@ -7,9 +7,13 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 })
 export class EditProjectComponent implements OnInit {
 
-	@Input() isDisplayed: boolean;
+	@Input() isDisplayed = false;
 
 	@Output() isDisplayedChange = new EventEmitter<boolean>();
+
+	@Output() projectSaved = new EventEmitter<string>();
+
+	name = '';
 
 	constructor() { }
 
@@ -19,6 +23,8 @@ export class EditProjectComponent implements OnInit {
 	onYesClick() {
 		this.isDisplayed = false;
 		this.isDisplayedChange.emit(this.isDisplayed);
+
+		this.projectSaved.emit(this.name);
 	}
 
 	onNoClick() {
