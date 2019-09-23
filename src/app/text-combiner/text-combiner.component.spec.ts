@@ -27,6 +27,10 @@ describe('TextCombinerComponent', () => {
 		get: jasmine.createSpy('get').and.returnValue(myProject)
 	};
 
+	const textCombinerService = {
+		getCombinedText: jasmine.createSpy('getCombinedText').and.returnValue('combined text')
+	};
+
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
 			imports: [TextGroupModule, TextOutputModule, TextEditOptionsModule],
@@ -34,7 +38,7 @@ describe('TextCombinerComponent', () => {
 			providers: [
 				{ provide: ActivatedRoute, useValue: activatedRoute },
 				{ provide: TextDataService, useValue: textDataService },
-				TextCombinerService
+				{ provide: TextCombinerService, useValue: textCombinerService }
 			]
 		})
 			.compileComponents();
@@ -51,6 +55,16 @@ describe('TextCombinerComponent', () => {
 			expect(activatedRoute.snapshot.paramMap.get).toHaveBeenCalledWith('name');
 			expect(textDataService.get).toHaveBeenCalledWith('MyProjectName');
 			expect(component.project.name).toBe('My Project');
+		});
+	});
+
+	describe('#onGroupChange', () => {
+		it('should handle a group change', () => {
+			textCombinerService.getCombinedText.calls.reset();
+			component.combinedText = '';
+			component.onGroupChange();
+			expect(textCombinerService.getCombinedText).toHaveBeenCalledWith(myProject);
+			expect(component.combinedText).toBe('combined text');
 		});
 	});
 

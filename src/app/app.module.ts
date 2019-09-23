@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ProjectsModule } from './projects';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { appRoutes } from './app.routes';
 import { TextCombinerModule } from './text-combiner/text-combiner.module';
 
@@ -15,9 +17,10 @@ import { TextCombinerModule } from './text-combiner/text-combiner.module';
 		BrowserModule,
 		ProjectsModule,
 		TextCombinerModule,
+		ToastModule,
 		RouterModule.forRoot(appRoutes)
 	],
-	providers: [],
+	providers: [MessageService],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
