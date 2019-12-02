@@ -1,2 +1,2 @@
-<p-card>{{text}}</p-card>
-<button pButton type="button" icon="pi pi-copy" label="Copy"></button>
+<input #textResult type="text" pInputText [(ngModel)]="text"/>
+<button pButton type="button" icon="pi pi-copy" label="Copy" (click)="copyToClipboard()"></button>

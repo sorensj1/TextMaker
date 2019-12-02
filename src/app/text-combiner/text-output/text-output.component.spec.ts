@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
 import { TextOutputComponent } from './text-output.component';
 
 describe('TextOutputComponent', () => {
@@ -9,7 +9,7 @@ describe('TextOutputComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			imports: [ButtonModule, CardModule],
+			imports: [ButtonModule, InputTextModule],
 			declarations: [TextOutputComponent]
 		})
 			.compileComponents();
