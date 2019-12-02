@@ -1,17 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
 	selector: 'app-text-output',
 	templateUrl: './text-output.component.html',
 	styleUrls: ['./text-output.component.scss']
 })
-export class TextOutputComponent implements OnInit {
+export class TextOutputComponent {
 
 	@Input() text: string;
 
+	@ViewChild('textResult', { static: true }) textResult: ElementRef;
+
 	constructor() { }
 
-	ngOnInit() {
+	copyToClipboard() {
+		navigator.clipboard.writeText(this.text);
 	}
-
 }
