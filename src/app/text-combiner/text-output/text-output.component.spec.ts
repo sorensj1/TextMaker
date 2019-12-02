@@ -1,7 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms'
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextOutputComponent } from './text-output.component';
+import { promise } from 'protractor';
+import { disconnect } from 'cluster';
+import { doesNotThrow } from 'assert';
 
 describe('TextOutputComponent', () => {
 	let component: TextOutputComponent;
@@ -9,7 +13,7 @@ describe('TextOutputComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			imports: [ButtonModule, InputTextModule],
+			imports: [FormsModule, ButtonModule, InputTextModule],
 			declarations: [TextOutputComponent]
 		})
 			.compileComponents();
@@ -21,7 +25,12 @@ describe('TextOutputComponent', () => {
 		fixture.detectChanges();
 	});
 
-	it('should be truthy', () => {
-		expect(component).toBeTruthy();
+	describe('#copyToClipboard', () => {
+		it('should copy using the clipboard API', () => {
+			const clipboardSpy = spyOn(navigator.clipboard, 'writeText').and.returnValue(Promise.resolve());
+			component.text = 'some text to copy';
+			component.copyToClipboard();
+			expect(clipboardSpy).toHaveBeenCalledWith('some text to copy');
+		});
 	});
 });
