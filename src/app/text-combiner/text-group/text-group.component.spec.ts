@@ -3,6 +3,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { TextGroupComponent } from './text-group.component';
+import { group } from '@angular/animations';
 
 describe('TextGroupComponent', () => {
 	let component: TextGroupComponent;
@@ -29,12 +30,55 @@ describe('TextGroupComponent', () => {
 				text: 'This is my item.',
 				isSelected: false
 			};
+			component.group = {
+				name: '',
+				items: [],
+				delimiter: '',
+				isExclusive: false
+			};
 
 			component.onTextItemClick(item);
 			expect(item.isSelected).toBe(true);
 
 			component.onTextItemClick(item);
 			expect(item.isSelected).toBe(false);
+		});
+
+		it('should respect the isExclusive flag', () => {
+			const items = [
+				{
+					name: 'Item 1',
+					text: 'This is item 1.',
+					isSelected: true
+				},
+				{
+					name: 'Item 2',
+					text: 'This is item 2.',
+					isSelected: false
+				},
+				{
+					name: 'Item 3',
+					text: 'This is item 3.',
+					isSelected: false
+				}
+			];
+			component.group = {
+				name: '',
+				items: items,
+				delimiter: '',
+				isExclusive: false
+			};
+
+			component.onTextItemClick(items[1]);
+			expect(items[0].isSelected).toBe(true);
+			expect(items[1].isSelected).toBe(true);
+			expect(items[2].isSelected).toBe(false);
+
+			component.group.isExclusive = true;
+			component.onTextItemClick(items[2]);
+			expect(items[0].isSelected).toBe(false);
+			expect(items[1].isSelected).toBe(false);
+			expect(items[2].isSelected).toBe(true);
 		});
 	});
 });

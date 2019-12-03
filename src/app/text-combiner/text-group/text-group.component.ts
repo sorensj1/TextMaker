@@ -18,6 +18,13 @@ export class TextGroupComponent {
 
 	onTextItemClick(item: TextItem) {
 		item.isSelected = !item.isSelected;
+		if (this.group.isExclusive) {
+			this.group.items.forEach(i => {
+				if (i !== item) {
+					i.isSelected = false;
+				}
+			});
+		}
 		this.groupChange.emit(this.group);
 	}
 
