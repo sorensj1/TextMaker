@@ -3,9 +3,6 @@ import { FormsModule } from '@angular/forms'
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextOutputComponent } from './text-output.component';
-import { promise } from 'protractor';
-import { disconnect } from 'cluster';
-import { doesNotThrow } from 'assert';
 
 describe('TextOutputComponent', () => {
 	let component: TextOutputComponent;

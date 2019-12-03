@@ -10,6 +10,7 @@
 </div>
 <div *ngIf="group && isEditing">
 	<input type="text" pInputText [(ngModel)]="group.name" />
+	<input type="checkbox" [(ngModel)]="group.isExclusive" />Exclusive
 	<div class="text-item-buttons">
 		<button *ngFor="let item of group.items" pButton type="button" icon="pi pi-pencil" label="{{item.name}}"></button>
 		<button pButton type="button" icon="pi pi-plus"></button>
