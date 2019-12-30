@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { EditTextItemModule } from './edit-text-item';
 import { TextGroupComponent } from './text-group.component';
 
 @NgModule({
@@ -10,7 +11,8 @@ import { TextGroupComponent } from './text-group.component';
 		CommonModule,
 		ButtonModule,
 		InputTextModule,
-		FormsModule
+		FormsModule,
+		EditTextItemModule
 	],
 	declarations: [TextGroupComponent],
 	exports: [TextGroupComponent]

@@ -1,3 +1,4 @@
+<app-edit-text-item #editDialog [(isDisplayed)]="isDialogShown" [item]="selectedItem" (dialogClosed)="onDialogClosed($event)"></app-edit-text-item>
 <div *ngIf="group && !isEditing">
 	<div class="group-name">{{ group.name }}</div>
 	<div *ngIf="group.isExclusive" class="is-exclusive">(Exclusive)</div>
@@ -12,7 +13,7 @@
 	<input type="text" pInputText [(ngModel)]="group.name" />
 	<input type="checkbox" [(ngModel)]="group.isExclusive" />Exclusive
 	<div class="text-item-buttons">
-		<button *ngFor="let item of group.items" pButton type="button" icon="pi pi-pencil" label="{{item.name}}"></button>
-		<button pButton type="button" icon="pi pi-plus"></button>
+		<button *ngFor="let item of group.items" pButton type="button" icon="pi pi-pencil" label="{{item.name}}" (click)="onTextItemEdit(item)"></button>
+		<button pButton type="button" icon="pi pi-plus" (click)="onTextItemAdd()"></button>
 	</div>
 </div>
