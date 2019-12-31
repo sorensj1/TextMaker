@@ -2,10 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { TextCombinerComponent } from './text-combiner.component';
 import { TextDataService } from '../shared/services';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
 import { TextGroupModule } from './text-group';
 import { TextOutputModule } from './text-output';
 import { TextEditOptionsModule } from './text-edit-options';
 import { TextCombinerService } from './text-combiner.service';
+import { Project } from '../shared/models';
 
 describe('TextCombinerComponent', () => {
 	let component: TextCombinerComponent;
@@ -33,7 +36,7 @@ describe('TextCombinerComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			imports: [TextGroupModule, TextOutputModule, TextEditOptionsModule],
+			imports: [CommonModule, ButtonModule, TextGroupModule, TextOutputModule, TextEditOptionsModule],
 			declarations: [TextCombinerComponent],
 			providers: [
 				{ provide: ActivatedRoute, useValue: activatedRoute },
@@ -65,6 +68,17 @@ describe('TextCombinerComponent', () => {
 			component.onGroupChange();
 			expect(textCombinerService.getCombinedText).toHaveBeenCalledWith(myProject);
 			expect(component.combinedText).toBe('combined text');
+		});
+	});
+
+	describe('#onDateClick', () => {
+		it('should change the date setting', () => {
+			component.project = <Project>{
+				isDateSelected: false
+			};
+			component.onDateClick();
+			expect(component.project.isDateSelected).toBe(true);
+			expect(textCombinerService.getCombinedText).toHaveBeenCalledWith(component.project);
 		});
 	});
 

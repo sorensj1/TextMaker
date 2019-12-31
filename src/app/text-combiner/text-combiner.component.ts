@@ -12,7 +12,11 @@ import { TextCombinerService } from './text-combiner.service';
 export class TextCombinerComponent implements OnInit {
 
 	project: Project;
-	combinedText: string;
+
+	combinedText = '';
+
+	date = '';
+
 	isEditing = false;
 
 	constructor(
@@ -25,9 +29,15 @@ export class TextCombinerComponent implements OnInit {
 		const name = this.route.snapshot.paramMap.get('name');
 		this.project = this.textDataService.get(name);
 		this.combinedText = this.textCombinerService.getCombinedText(this.project);
+		this.date = new Date().toISOString().slice(0, 10);
 	}
 
 	onGroupChange() {
+		this.combinedText = this.textCombinerService.getCombinedText(this.project);
+	}
+
+	onDateClick() {
+		this.project.isDateSelected = !this.project.isDateSelected;
 		this.combinedText = this.textCombinerService.getCombinedText(this.project);
 	}
 

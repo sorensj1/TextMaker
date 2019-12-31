@@ -55,8 +55,15 @@ describe('Service: TextCombinerService', () => {
 			expect(service.getCombinedText(null)).toBe('');
 		});
 
-		it('should transform a project', () => {
+		it('should combine text for a project with no date', () => {
+			myNewTeam.isDateSelected = false;
 			expect(service.getCombinedText(myNewTeam)).toBe('The second item.The third item.');
+		});
+
+		it('should combine text for a project with a date', () => {
+			spyOn(Date.prototype, 'toISOString').and.returnValue('1970-1-1');
+			myNewTeam.isDateSelected = true;
+			expect(service.getCombinedText(myNewTeam)).toBe('1970-1-1 The second item.The third item.');
 		});
 	});
 });
