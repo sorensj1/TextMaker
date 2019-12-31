@@ -1,2 +1,3 @@
-<input #textResult type="text" pInputText [(ngModel)]="text"/>
-<button pButton type="button" icon="pi pi-copy" label="Copy" (click)="copyToClipboard()"></button>
+<input class="text-result" #textResult type="text" pInputText [(ngModel)]="text"/>
+<input class="auto-copy" type="checkbox" [(ngModel)]="isAutoCopying"/><label for="auto-copy">Auto-copy on change</label>
+<button class="copy-button" pButton type="button" icon="pi pi-copy" label="Copy" (click)="copyToClipboard()"></button>
