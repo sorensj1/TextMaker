@@ -1,3 +1,13 @@
-.project-name {
+header {
+	display: flex;
+	justify-content: space-between;
+}
+
+.edit-button {
 	float: right;
+	width: 90pt;
+}
+
+button {
+	margin-bottom: 4pt;
 }

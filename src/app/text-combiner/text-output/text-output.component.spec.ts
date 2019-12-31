@@ -22,9 +22,28 @@ describe('TextOutputComponent', () => {
 		fixture.detectChanges();
 	});
 
+	describe('#text', () => {
+		it('should just set the text when not auto-copying', () => {
+			const copySpy = spyOn(component, 'copyToClipboard');
+			component.isAutoCopying = false;
+			component.text = 'my text result';
+			expect(copySpy).not.toHaveBeenCalled();
+			expect(component.text).toBe('my text result');
+		});
+
+		it('should set the text and auto-copy', () => {
+			const copySpy = spyOn(component, 'copyToClipboard');
+			component.isAutoCopying = true;
+			component.text = 'my text result';
+			expect(copySpy).toHaveBeenCalled();
+			expect(component.text).toBe('my text result');
+		});
+	});
+
 	describe('#copyToClipboard', () => {
 		it('should copy using the clipboard API', () => {
 			const clipboardSpy = spyOn(navigator.clipboard, 'writeText').and.returnValue(Promise.resolve());
+			component.isAutoCopying = false;
 			component.text = 'some text to copy';
 			component.copyToClipboard();
 			expect(clipboardSpy).toHaveBeenCalledWith('some text to copy');

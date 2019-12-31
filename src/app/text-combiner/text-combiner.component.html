@@ -1,7 +1,10 @@
-<button pButton type="button" *ngIf="!isEditing" label="Edit" icon="pi pi-cog" (click)="onEditClick()"></button>
-<div class="project-name">{{ project.name }}</div>
-<button pButton type="button" *ngIf="project.isDateSelected" class="ui-button-rounded ui-button-warning" label="{{date}}" (click)="onDateClick()"></button>
-<button pButton type="button" *ngIf="!project.isDateSelected" class="ui-button-rounded ui-button-secondary" label="{{date}}" (click)="onDateClick()"></button>
+<header>
+    <h2>TextMaker</h2>
+    <h3>{{ project.name }}</h3>
+</header>
+<button class="edit-button" pButton type="button" *ngIf="!isEditing" label="Edit" icon="pi pi-cog" (click)="onEditClick()"></button>
+<button pButton type="button" *ngIf="!isEditing && project.isDateSelected" class="ui-button-rounded ui-button-warning" label="{{date}}" (click)="onDateClick()"></button>
+<button pButton type="button" *ngIf="!isEditing && !project.isDateSelected" class="ui-button-rounded ui-button-secondary" label="{{date}}" (click)="onDateClick()"></button>
 <app-text-group *ngFor="let group of project.groups" [isEditing]="isEditing" [group]="group" (groupChange)="onGroupChange()"></app-text-group>
 <app-text-output *ngIf="!isEditing" [text]="combinedText"></app-text-output>
 <app-text-edit-options *ngIf="isEditing" (closed)="onEditorClosed()"></app-text-edit-options>

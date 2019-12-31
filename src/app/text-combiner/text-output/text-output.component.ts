@@ -7,9 +7,22 @@ import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 })
 export class TextOutputComponent {
 
-	@Input() text: string;
+	@Input() set text(textVal: string) {
+		this.textVal = textVal;
+		if (this.isAutoCopying) {
+			this.copyToClipboard();
+		}
+	}
+
+	get text() {
+		return this.textVal;
+	}
 
 	@ViewChild('textResult', { static: true }) textResult: ElementRef;
+
+	isAutoCopying = true;
+
+	private textVal = '';
 
 	constructor() { }
 
