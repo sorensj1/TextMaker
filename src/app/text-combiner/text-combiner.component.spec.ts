@@ -73,6 +73,7 @@ describe('TextCombinerComponent', () => {
 
 	describe('#onDateClick', () => {
 		it('should change the date setting', () => {
+			textCombinerService.getCombinedText.calls.reset();
 			component.project = <Project>{
 				isDateSelected: false
 			};
@@ -91,10 +92,20 @@ describe('TextCombinerComponent', () => {
 	});
 
 	describe('#onEditorClosed', () => {
-		it('should set isEditing to false', () => {
+		it('should just set isEditing to false when cancelled', () => {
+			textCombinerService.getCombinedText.calls.reset();
 			component.isEditing = true;
-			component.onEditorClosed();
+			component.onEditorClosed(false);
 			expect(component.isEditing).toBe(false);
+			expect(textCombinerService.getCombinedText).not.toHaveBeenCalled();
+		});
+
+		it('should set isEditing to false and refresh the text on OK', () => {
+			textCombinerService.getCombinedText.calls.reset();
+			component.isEditing = true;
+			component.onEditorClosed(true);
+			expect(component.isEditing).toBe(false);
+			expect(textCombinerService.getCombinedText).toHaveBeenCalledWith(component.project);
 		});
 	});
 });

@@ -18,12 +18,12 @@ describe('Service: TextDataService', () => {
 					}
 				],
 				isExclusive: false,
+				isOnNewLine: false,
 				delimiter: ', '
 			}
 		],
 		isAutomaticallyCopied: false,
-		isDateSelected: false,
-		delimiter: '\n'
+		isDateSelected: false
 	};
 
 	beforeEach(() => {

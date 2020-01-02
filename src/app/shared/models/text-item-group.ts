@@ -5,4 +5,5 @@ export interface TextItemGroup {
 	items: TextItem[];
 	isExclusive: boolean;
 	delimiter: string;
+	isOnNewLine: boolean;
 }

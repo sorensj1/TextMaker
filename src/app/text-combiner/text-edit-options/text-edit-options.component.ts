@@ -7,16 +7,16 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class TextEditOptionsComponent {
 
-	@Output() closed = new EventEmitter();
+	@Output() closed = new EventEmitter<boolean>();
 
 	constructor() { }
 
 	onOkClick() {
-		this.closed.emit();
+		this.closed.emit(true);
 	}
 
 	onCancelClick() {
-		this.closed.emit();
+		this.closed.emit(false);
 	}
 
 }

@@ -10,10 +10,12 @@
 	</div>
 </div>
 <div *ngIf="group && isEditing">
-	<input type="text" pInputText [(ngModel)]="group.name" />
+	<input class="name-text" type="text" pInputText [(ngModel)]="group.name" />
 	<input type="checkbox" [(ngModel)]="group.isExclusive" />Exclusive
 	<div class="text-item-buttons">
 		<button *ngFor="let item of group.items" pButton type="button" icon="pi pi-pencil" label="{{item.name}}" (click)="onTextItemEdit(item)"></button>
 		<button pButton type="button" icon="pi pi-plus" (click)="onTextItemAdd()"></button>
 	</div>
+	Delimiter: <input class="delimiter-text" type="text" pInputText [(ngModel)]="group.delimiter" />
+	<input type="checkbox" [(ngModel)]="group.isOnNewLine" />Show Group on New Line
 </div>

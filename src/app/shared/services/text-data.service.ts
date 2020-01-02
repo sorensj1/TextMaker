@@ -30,6 +30,7 @@ export class TextDataService {
 						}
 					],
 					isExclusive: false,
+					isOnNewLine: false,
 					delimiter: ', '
 				},
 				{
@@ -52,6 +53,7 @@ export class TextDataService {
 						}
 					],
 					isExclusive: true,
+					isOnNewLine: true,
 					delimiter: ''
 				},
 				{
@@ -88,8 +90,7 @@ export class TextDataService {
 				}
 			],
 			isAutomaticallyCopied: false,
-			isDateSelected: false,
-			delimiter: '\n'
+			isDateSelected: false
 		},
 		'Team2': <Project>{
 			name: 'Team 2',
@@ -109,12 +110,12 @@ export class TextDataService {
 						}
 					],
 					isExclusive: false,
+					isOnNewLine: false,
 					delimiter: ', '
 				}
 			],
 			isAutomaticallyCopied: true,
-			isDateSelected: true,
-			delimiter: '\n'
+			isDateSelected: true
 		}
 	};
 

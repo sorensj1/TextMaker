@@ -7,4 +7,4 @@
 <button pButton type="button" *ngIf="!isEditing && !project.isDateSelected" class="ui-button-rounded ui-button-secondary" label="{{date}}" (click)="onDateClick()"></button>
 <app-text-group *ngFor="let group of project.groups" [isEditing]="isEditing" [group]="group" (groupChange)="onGroupChange()"></app-text-group>
 <app-text-output *ngIf="!isEditing" [text]="combinedText"></app-text-output>
-<app-text-edit-options *ngIf="isEditing" (closed)="onEditorClosed()"></app-text-edit-options>
+<app-text-edit-options *ngIf="isEditing" (closed)="onEditorClosed($event)"></app-text-edit-options>

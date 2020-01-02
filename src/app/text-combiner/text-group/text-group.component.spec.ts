@@ -35,7 +35,8 @@ describe('TextGroupComponent', () => {
 				name: '',
 				items: [],
 				delimiter: '',
-				isExclusive: false
+				isExclusive: false,
+				isOnNewLine: false
 			};
 
 			component.onTextItemClick(item);
@@ -67,7 +68,8 @@ describe('TextGroupComponent', () => {
 				name: '',
 				items: items,
 				delimiter: '',
-				isExclusive: false
+				isExclusive: false,
+				isOnNewLine: false
 			};
 
 			component.onTextItemClick(items[1]);
