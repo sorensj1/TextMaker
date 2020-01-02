@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms'
 import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TextOutputComponent } from './text-output.component';
 
 describe('TextOutputComponent', () => {
@@ -10,7 +10,7 @@ describe('TextOutputComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			imports: [FormsModule, ButtonModule, InputTextModule],
+			imports: [FormsModule, ButtonModule, InputTextareaModule],
 			declarations: [TextOutputComponent]
 		})
 			.compileComponents();

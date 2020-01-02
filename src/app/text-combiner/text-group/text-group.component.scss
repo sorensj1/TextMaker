@@ -2,16 +2,30 @@ button {
 	margin: 5px;
 }
 
+input[type='checkbox'] {
+	margin-left: 1em;
+}
+
 .text-item-buttons {
 	display: flex;
 }
 
 .group-name {
 	display: inline-block;
-	margin: 5px;
+	margin-top: 1.5em;
 }
 
 .is-exclusive {
 	display: inline-block;
-	color: darkgray;
+	margin-left: 5px;
+	color: #777777;
+}
+
+.name-text {
+	margin-top: 2em;
+	width: 50%;
+}
+
+.delimiter-text {
+	width: 50px;
 }

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea'
 import { TextOutputComponent } from './text-output.component';
 
 @NgModule({
@@ -10,7 +10,7 @@ import { TextOutputComponent } from './text-output.component';
 		CommonModule,
 		FormsModule,
 		ButtonModule,
-		InputTextModule
+		InputTextareaModule
 	],
 	declarations: [TextOutputComponent],
 	exports: [TextOutputComponent]

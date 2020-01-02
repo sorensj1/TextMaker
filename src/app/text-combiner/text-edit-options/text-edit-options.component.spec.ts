@@ -25,7 +25,10 @@ describe('TextEditOptionsComponent', () => {
 		it('should emit the closed event', () => {
 			let wasCalled = false;
 			component.closed = new EventEmitter();
-			component.closed.subscribe(() => wasCalled = true);
+			component.closed.subscribe(retVal => {
+				wasCalled = true;
+				expect(retVal).toBe(true);
+			});
 
 			component.onOkClick();
 			component.closed.complete();
@@ -38,16 +41,15 @@ describe('TextEditOptionsComponent', () => {
 		it('should emit the closed event', () => {
 			let wasCalled = false;
 			component.closed = new EventEmitter();
-			component.closed.subscribe(() => wasCalled = true);
+			component.closed.subscribe(retVal => {
+				wasCalled = true;
+				expect(retVal).toBe(false);
+			});
 
 			component.onCancelClick();
 			component.closed.complete();
 
 			expect(wasCalled).toBe(true);
 		});
-	});
-
-	it('should be truthy', () => {
-		expect(component).toBeTruthy();
 	});
 });

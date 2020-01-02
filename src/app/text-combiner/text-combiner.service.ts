@@ -9,8 +9,19 @@ export class TextCombinerService {
 				output = new Date().toISOString().slice(0, 10) + ' ';
 			}
 			project.groups.forEach((group: TextItemGroup) => {
+				if (group.isOnNewLine) {
+					output += '\n';
+				}
+				let hasDelimitedItems = false;
 				group.items.forEach((item: TextItem) => {
 					if (item.isSelected) {
+						if (group.delimiter !== '') {
+							if (hasDelimitedItems) {
+								output += group.delimiter;
+							} else {
+								hasDelimitedItems = true;
+							}
+						}
 						output += item.text;
 					}
 				});

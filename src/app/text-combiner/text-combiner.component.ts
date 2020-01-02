@@ -28,25 +28,31 @@ export class TextCombinerComponent implements OnInit {
 	ngOnInit() {
 		const name = this.route.snapshot.paramMap.get('name');
 		this.project = this.textDataService.get(name);
-		this.combinedText = this.textCombinerService.getCombinedText(this.project);
+		this.setText();
 		this.date = new Date().toISOString().slice(0, 10);
 	}
 
 	onGroupChange() {
-		this.combinedText = this.textCombinerService.getCombinedText(this.project);
+		this.setText();
 	}
 
 	onDateClick() {
 		this.project.isDateSelected = !this.project.isDateSelected;
-		this.combinedText = this.textCombinerService.getCombinedText(this.project);
+		this.setText();
 	}
 
 	onEditClick() {
 		this.isEditing = true;
 	}
 
-	onEditorClosed() {
+	onEditorClosed(wasEdited: boolean) {
 		this.isEditing = false;
+		if (wasEdited) {
+			this.setText();
+		}
 	}
 
+	private setText() {
+		this.combinedText = this.textCombinerService.getCombinedText(this.project);
+	}
 }

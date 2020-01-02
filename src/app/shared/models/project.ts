@@ -5,5 +5,4 @@ export interface Project {
 	groups: TextItemGroup[];
 	isDateSelected: boolean;
 	isAutomaticallyCopied: boolean;
-	delimiter: string;
 }
