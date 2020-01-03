@@ -54,7 +54,7 @@ export class TextCombinerComponent implements OnInit {
 			isExclusive: false,
 			delimiter: '',
 			isOnNewLine: false
-		}
+		};
 		this.project.groups.splice(index + 1, 0, newGroup);
 	}
 
