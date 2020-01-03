@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Project } from '../shared/models';
+import { Project, TextItemGroup } from '../shared/models';
 import { TextDataService } from '../shared/services';
 import { TextCombinerService } from './text-combiner.service';
 
@@ -36,6 +36,37 @@ export class TextCombinerComponent implements OnInit {
 		this.setText();
 	}
 
+	onGroupMoveUp(group: TextItemGroup) {
+		const index = this.project.groups.indexOf(group);
+		this.swapGroups(index, index - 1);
+	}
+
+	onGroupMoveDown(group: TextItemGroup) {
+		const index = this.project.groups.indexOf(group);
+		this.swapGroups(index, index + 1);
+	}
+
+	onGroupAdd(group: TextItemGroup) {
+		const index = this.project.groups.indexOf(group);
+		const newGroup: TextItemGroup = {
+			name: 'New Group',
+			items: [],
+			isExclusive: false,
+			delimiter: '',
+			isOnNewLine: false
+		}
+		this.project.groups.splice(index + 1, 0, newGroup);
+	}
+
+	onGroupDelete(group: TextItemGroup) {
+		const index = this.project.groups.indexOf(group);
+		if (index > -1) {
+			this.project.groups.splice(index, 1);
+		}
+
+		this.setText();
+	}
+
 	onDateClick() {
 		this.project.isDateSelected = !this.project.isDateSelected;
 		this.setText();
@@ -54,5 +85,11 @@ export class TextCombinerComponent implements OnInit {
 
 	private setText() {
 		this.combinedText = this.textCombinerService.getCombinedText(this.project);
+	}
+
+	private swapGroups(index1: number, index2: number) {
+		const temp = this.project.groups[index1];
+		this.project.groups[index1] = this.project.groups[index2];
+		this.project.groups[index2] = temp;
 	}
 }

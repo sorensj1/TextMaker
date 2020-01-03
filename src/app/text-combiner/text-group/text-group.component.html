@@ -1,4 +1,4 @@
-<app-edit-text-item #editDialog [(isDisplayed)]="isDialogShown" [item]="selectedItem" (dialogClosed)="onDialogClosed($event)"></app-edit-text-item>
+<app-edit-text-item #editDialog [(isDisplayed)]="isDialogShown" [(item)]="selectedItem" (dialogClosed)="onDialogClosed($event)"></app-edit-text-item>
 <div *ngIf="group && !isEditing">
 	<div class="group-name">{{ group.name }}</div>
 	<div *ngIf="group.isExclusive" class="is-exclusive">(Exclusive)</div>
@@ -18,4 +18,10 @@
 	</div>
 	Delimiter: <input class="delimiter-text" type="text" pInputText [(ngModel)]="group.delimiter" />
 	<input type="checkbox" [(ngModel)]="group.isOnNewLine" />Show group on a new line
+	<div class="group-buttons">
+		<button pButton type="button" icon="pi pi-arrow-up" [disabled]="isFirst" (click)="onGroupMoveUp()"></button>
+		<button pButton type="button" icon="pi pi-arrow-down" [disabled]="isLast" (click)="onGroupMoveDown()"></button>
+		<button pButton type="button" icon="pi pi-plus" (click)="onGroupAdd()"></button>
+		<button pButton type="button" icon="pi pi-times" class="ui-button-danger" (click)="onGroupDelete()"></button>
+	</div>
 </div>
