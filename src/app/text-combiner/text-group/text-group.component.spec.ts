@@ -24,12 +24,12 @@ describe('TextGroupComponent', () => {
 
 	describe('#onTextItemClick', () => {
 		it('should swap the items selected state', () => {
-			const item = {
+			const item = <TextItem>{
 				name: 'My Item',
 				text: 'This is my item.',
 				isSelected: false
 			};
-			component.group = {
+			component.group = <TextItemGroup>{
 				name: '',
 				items: [],
 				delimiter: '',

@@ -73,9 +73,7 @@ export class EditTextGroupComponent {
 					this.itemToSave.text = this.selectedItem.text;
 				} else {
 					const index = this.group.items.indexOf(this.itemToSave);
-					if (index > -1) {
-						this.group.items.splice(index, 1);
-					}
+					this.group.items.splice(index, 1);
 				}
 			} else {
 				this.group.items.push(this.selectedItem);

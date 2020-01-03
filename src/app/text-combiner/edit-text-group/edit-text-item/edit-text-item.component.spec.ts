@@ -6,8 +6,9 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { TextItem } from 'src/app/shared/models';
 
-describe('EditProjectComponent', () => {
+describe('EditTextItemComponent', () => {
 	let component: EditTextItemComponent;
 	let fixture: ComponentFixture<EditTextItemComponent>;
 
@@ -25,8 +26,34 @@ describe('EditProjectComponent', () => {
 		fixture.detectChanges();
 	});
 
+	describe('#onDeleteClick', () => {
+		it('should close the dialog with a change and set the group to null', () => {
+			let wasDialogCalled = false;
+			let wasItemCalled = false;
+			let emitDialogVal = false;
+			let emitItemVal = <TextItem>{
+				name: 'Test',
+				text: 'Test'
+			};
+			component.isDisplayed = true;
+			component.dialogClosed.subscribe(val => {
+				wasDialogCalled = true;
+				emitDialogVal = val;
+			});
+			component.itemChange.subscribe(val => {
+				wasItemCalled = true;
+				emitItemVal = val;
+			});
+			component.onDeleteClick();
+			expect(wasDialogCalled).toBe(true);
+			expect(wasItemCalled).toBe(true);
+			expect(emitDialogVal).toBe(true);
+			expect(emitItemVal).toBe(null);
+		});
+	});
+
 	describe('#onYesClick', () => {
-		it('should set the dialog to appear', () => {
+		it('should close the dialog with a change', () => {
 			let wasCalled = false;
 			let emitVal = false;
 			component.isDisplayed = true;
@@ -41,7 +68,7 @@ describe('EditProjectComponent', () => {
 	});
 
 	describe('#onNoClick', () => {
-		it('should set the dialog to appear', () => {
+		it('should close the dialog without a change', () => {
 			let wasCalled = false;
 			let emitVal = false;
 			component.isDisplayed = true;

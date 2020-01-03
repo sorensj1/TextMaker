@@ -5,10 +5,11 @@ import { TextDataService } from '../shared/services';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TextGroupModule } from './text-group';
+import { EditTextGroupModule } from './edit-text-group';
 import { TextOutputModule } from './text-output';
 import { TextEditOptionsModule } from './text-edit-options';
 import { TextCombinerService } from './text-combiner.service';
-import { Project } from '../shared/models';
+import { Project, TextItemGroup } from '../shared/models';
 
 describe('TextCombinerComponent', () => {
 	let component: TextCombinerComponent;
@@ -36,7 +37,7 @@ describe('TextCombinerComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			imports: [CommonModule, ButtonModule, TextGroupModule, TextOutputModule, TextEditOptionsModule],
+			imports: [CommonModule, ButtonModule, TextGroupModule, EditTextGroupModule, TextOutputModule, TextEditOptionsModule],
 			declarations: [TextCombinerComponent],
 			providers: [
 				{ provide: ActivatedRoute, useValue: activatedRoute },
@@ -68,6 +69,94 @@ describe('TextCombinerComponent', () => {
 			component.onGroupChange();
 			expect(textCombinerService.getCombinedText).toHaveBeenCalledWith(myProject);
 			expect(component.combinedText).toBe('combined text');
+		});
+	});
+
+	describe('#onGroupMoveUp', () => {
+		it('should set isEditing to true', () => {
+			component.project = <Project>{
+				groups: [
+					<TextItemGroup>{
+						name: 'Group 1'
+					},
+					<TextItemGroup>{
+						name: 'Group 2'
+					},
+					<TextItemGroup>{
+						name: 'Group 3'
+					}
+				]
+			};
+			component.onGroupMoveUp(component.project.groups[1]);
+			expect(component.project.groups[0].name).toBe('Group 2');
+			expect(component.project.groups[1].name).toBe('Group 1');
+			expect(component.project.groups[2].name).toBe('Group 3');
+		});
+	});
+
+	describe('#onGroupMoveDown', () => {
+		it('should set isEditing to true', () => {
+			component.project = <Project>{
+				groups: [
+					<TextItemGroup>{
+						name: 'Group 1'
+					},
+					<TextItemGroup>{
+						name: 'Group 2'
+					},
+					<TextItemGroup>{
+						name: 'Group 3'
+					}
+				]
+			};
+			component.onGroupMoveDown(component.project.groups[1]);
+			expect(component.project.groups[0].name).toBe('Group 1');
+			expect(component.project.groups[1].name).toBe('Group 3');
+			expect(component.project.groups[2].name).toBe('Group 2');
+		});
+	});
+
+	describe('#onGroupAdd', () => {
+		it('should set isEditing to true', () => {
+			component.project = <Project>{
+				groups: [
+					<TextItemGroup>{
+						name: 'Group 1'
+					},
+					<TextItemGroup>{
+						name: 'Group 2'
+					},
+					<TextItemGroup>{
+						name: 'Group 3'
+					}
+				]
+			};
+			component.onGroupAdd(component.project.groups[1]);
+			expect(component.project.groups[0].name).toBe('Group 1');
+			expect(component.project.groups[1].name).toBe('Group 2');
+			expect(component.project.groups[2].name).toBe('New Group');
+			expect(component.project.groups[3].name).toBe('Group 3');
+		});
+	});
+
+	describe('#onGroupDelete', () => {
+		it('should set isEditing to true', () => {
+			component.project = <Project>{
+				groups: [
+					<TextItemGroup>{
+						name: 'Group 1'
+					},
+					<TextItemGroup>{
+						name: 'Group 2'
+					},
+					<TextItemGroup>{
+						name: 'Group 3'
+					}
+				]
+			};
+			component.onGroupDelete(component.project.groups[1]);
+			expect(component.project.groups[0].name).toBe('Group 1');
+			expect(component.project.groups[1].name).toBe('Group 3');
 		});
 	});
 

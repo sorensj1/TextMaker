@@ -1,6 +1,6 @@
-<div class="group-name">{{ group.name }}</div>
-<div *ngIf="group.isExclusive" class="is-exclusive">(Exclusive)</div>
-<div class="text-item-buttons">
+<div class="group-name">{{ group?.name }}</div>
+<div *ngIf="group && group.isExclusive" class="is-exclusive">(Exclusive)</div>
+<div *ngIf="group" class="text-item-buttons">
 	<div *ngFor="let item of group.items">
 		<button pButton type="button" *ngIf="item.isSelected" class="ui-button-rounded ui-button-warning" label="{{item.name}}" (click)="onTextItemClick(item)"></button>
 		<button pButton type="button" *ngIf="!item.isSelected" class="ui-button-rounded ui-button-secondary" label="{{item.name}}" (click)="onTextItemClick(item)"></button>

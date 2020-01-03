@@ -60,9 +60,7 @@ export class TextCombinerComponent implements OnInit {
 
 	onGroupDelete(group: TextItemGroup) {
 		const index = this.project.groups.indexOf(group);
-		if (index > -1) {
-			this.project.groups.splice(index, 1);
-		}
+		this.project.groups.splice(index, 1);
 
 		this.setText();
 	}
