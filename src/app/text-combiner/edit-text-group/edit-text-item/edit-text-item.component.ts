@@ -12,11 +12,20 @@ export class EditTextItemComponent implements OnInit {
 
 	@Input() item: TextItem = null;
 
+	@Input() isNew = false;
+
+	@Output() itemChange = new EventEmitter<TextItem>();
+
 	@Output() dialogClosed = new EventEmitter<boolean>();
 
 	constructor() { }
 
 	ngOnInit() {
+	}
+
+	onDeleteClick() {
+		this.itemChange.emit(null);
+		this.dialogClosed.emit(true);
 	}
 
 	onYesClick() {

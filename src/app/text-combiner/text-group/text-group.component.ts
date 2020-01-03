@@ -9,17 +9,9 @@ import { stringify } from 'querystring';
 })
 export class TextGroupComponent {
 
-	@Input() isEditing: boolean;
-
 	@Input() group: TextItemGroup;
 
 	@Output() groupChange = new EventEmitter<TextItemGroup>();
-
-	isDialogShown = false;
-
-	selectedItem: TextItem = null;
-
-	private itemToSave: TextItem = null;
 
 	constructor() { }
 
@@ -33,37 +25,5 @@ export class TextGroupComponent {
 			});
 		}
 		this.groupChange.emit(this.group);
-	}
-
-	onTextItemEdit(item: TextItem) {
-		this.itemToSave = item;
-		this.selectedItem = <TextItem>{
-			name: item.name,
-			text: item.text
-		};
-		this.isDialogShown = true;
-	}
-
-	onTextItemAdd() {
-		this.selectedItem = <TextItem>{
-			name: 'New Item',
-			text: ''
-		};
-		this.isDialogShown = true;
-	}
-
-	onDialogClosed(wasEdited: boolean) {
-		if (wasEdited) {
-			if (this.itemToSave) {
-				this.itemToSave.name = this.selectedItem.name;
-				this.itemToSave.text = this.selectedItem.text;
-			} else {
-				this.group.items.push(this.selectedItem);
-			}
-			this.group.items.sort((a, b) => a.name.localeCompare(b.name));
-		}
-		this.itemToSave = null;
-		this.selectedItem = null;
-		this.isDialogShown = false;
 	}
 }

@@ -1,8 +1,0 @@
-<p-dialog header="Edit Item" [(visible)]="isDisplayed" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [baseZIndex]="10000" (onHide)="onNoClick()">
-    <input class="item-name" type="text" pInputText [(ngModel)]="item && item.name" />
-    <input class="item-text" type="text" pInputText [(ngModel)]="item && item.text" />
-    <p-footer>
-        <button type="button" pButton icon="pi pi-check" (click)="onYesClick()" label="OK"></button>
-        <button type="button" pButton icon="pi pi-times" (click)="onNoClick()" label="Cancel"></button>
-    </p-footer>
-</p-dialog>

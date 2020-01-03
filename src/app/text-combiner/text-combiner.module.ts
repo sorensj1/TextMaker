@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { TextCombinerComponent } from './text-combiner.component';
 import { TextGroupModule } from './text-group';
 import { TextOutputModule } from './text-output';
+import { EditTextGroupModule } from './edit-text-group';
 import { TextEditOptionsModule } from './text-edit-options';
 import { TextCombinerService } from './text-combiner.service';
 
@@ -12,6 +13,7 @@ import { TextCombinerService } from './text-combiner.service';
 		CommonModule,
 		ButtonModule,
 		TextGroupModule,
+		EditTextGroupModule,
 		TextOutputModule,
 		TextEditOptionsModule
 	],
