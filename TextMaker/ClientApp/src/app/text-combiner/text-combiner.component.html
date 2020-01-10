@@ -1,16 +1,18 @@
 <header>
     <h2>TextMaker</h2>
-    <h3>{{ project.name }}</h3>
+    <h3>{{ project && project.name }}</h3>
 </header>
-<button class="edit-button" pButton type="button" *ngIf="!isEditing" label="Edit" icon="pi pi-cog" (click)="onEditClick()"></button>
-<button pButton type="button" *ngIf="!isEditing && project.isDateSelected" class="ui-button-rounded ui-button-warning" label="{{date}}" (click)="onDateClick()"></button>
-<button pButton type="button" *ngIf="!isEditing && !project.isDateSelected" class="ui-button-rounded ui-button-secondary" label="{{date}}" (click)="onDateClick()"></button>
-<div *ngIf="!isEditing">
-    <app-text-group *ngFor="let group of project.groups" [group]="group" (groupChange)="onGroupChange()"></app-text-group>
-</div>
-<div *ngIf="isEditing">
-    <app-edit-text-group *ngFor="let group of project.groups; index as i" [isFirst]="i === 0" [isLast]="i === (project.groups.length - 1)" [group]="group" (groupChange)="onGroupChange()"
-    (groupAdd)="onGroupAdd($event)" (groupMoveUp)="onGroupMoveUp($event)" (groupMoveDown)="onGroupMoveDown($event)" (groupDelete)="onGroupDelete($event)"></app-edit-text-group>
+<div *ngIf="project">
+    <button class="edit-button" pButton type="button" *ngIf="!isEditing" label="Edit" icon="pi pi-cog" (click)="onEditClick()"></button>
+    <button pButton type="button" *ngIf="!isEditing && project.isDateSelected" class="ui-button-rounded ui-button-warning" label="{{date}}" (click)="onDateClick()"></button>
+    <button pButton type="button" *ngIf="!isEditing && !project.isDateSelected" class="ui-button-rounded ui-button-secondary" label="{{date}}" (click)="onDateClick()"></button>
+    <div *ngIf="!isEditing">
+        <app-text-group *ngFor="let group of project.groups" [group]="group" (groupChange)="onGroupChange()"></app-text-group>
+    </div>
+    <div *ngIf="isEditing">
+        <app-edit-text-group *ngFor="let group of project.groups; index as i" [isFirst]="i === 0" [isLast]="i === (project.groups.length - 1)" [group]="group" (groupChange)="onGroupChange()"
+            (groupAdd)="onGroupAdd($event)" (groupMoveUp)="onGroupMoveUp($event)" (groupMoveDown)="onGroupMoveDown($event)" (groupDelete)="onGroupDelete($event)"></app-edit-text-group>
+    </div>
 </div>
 <app-text-output *ngIf="!isEditing" [text]="combinedText"></app-text-output>
 <app-text-edit-options *ngIf="isEditing" (closed)="onEditorClosed($event)"></app-text-edit-options>

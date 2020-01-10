@@ -1,151 +1,36 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Project } from '../models';
+import { Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class TextDataService {
 
-	private data = {
-		'Team1': <Project>{
-			name: 'Team 1',
-			groups: [
-				{
-					name: 'Team Members',
-					items: [
-						{
-							name: 'Guy, Some',
-							text: 'Some Guy',
-							isSelected: true
-						},
-						{
-							name: 'Guy, Another',
-							text: 'Another Guy',
-							isSelected: false
-						},
-						{
-							name: 'Else, Someone',
-							text: 'Someone Else',
-							isSelected: true
-						}
-					],
-					isExclusive: false,
-					isOnNewLine: false,
-					delimiter: ', '
-				},
-				{
-					name: 'Reasoning',
-					items: [
-						{
-							name: 'Not Bad',
-							text: 'It\'s not so bad.',
-							isSelected: false
-						},
-						{
-							name: 'Could Be Worse',
-							text: 'You know, it could be worse.',
-							isSelected: false
-						},
-						{
-							name: 'Better Next Time',
-							text: 'We\'ll do better next time.',
-							isSelected: false
-						}
-					],
-					isExclusive: true,
-					isOnNewLine: true,
-					delimiter: ''
-				},
-				{
-					name: 'Latin Stuff',
-					items: [
-						{
-							name: 'Lorem',
-							text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-							isSelected: true
-						},
-						{
-							name: 'Quisque',
-							text: 'Quisque et volutpat sem.  Quisque quis magna non ex tempor tempus eu id nisl. Nam eget laoreet sapien.  Quisque commodo enim a odio faucibus facilisis. In quis urna id nulla euismod lacinia ut at sem. Morbi ac feugiat tellus, euismod rutrum quam.',
-							isSelected: false
-						},
-						{
-							name: 'Etiam',
-							text: 'Etiam diam nisl, semper vel fringilla vitae, pretium in elit. Ut enim dui, laoreet in dictum a, elementum nec ligula.',
-							isSelected: false
-						},
-						{
-							name: 'Sed',
-							text: 'Sed eu porttitor turpis, faucibus auctor purus.',
-							isSelected: false
-						},
-						{
-							name: 'Curabitur',
-							text: 'Curabitur ornare scelerisque orci vel bibendum.',
-							isSelected: false
-						}
-					],
-					isExclusive: false,
-					delimiter: '  '
-				}
-			],
-			isAutomaticallyCopied: false,
-			isDateSelected: false
-		},
-		'Team2': <Project>{
-			name: 'Team 2',
-			groups: [
-				{
-					name: 'Participants',
-					items: [
-						{
-							name: 'Schmoe, Joe',
-							text: 'Joe Schmoe',
-							isSelected: false
-						},
-						{
-							name: 'Doe, Jane',
-							text: 'Jane Doe',
-							isSelected: false
-						}
-					],
-					isExclusive: false,
-					isOnNewLine: false,
-					delimiter: ', '
-				}
-			],
-			isAutomaticallyCopied: true,
-			isDateSelected: true
-		}
-	};
+	constructor(
+		private httpClient: HttpClient
+	) { }
 
-	constructor() { }
-
-	getKeys(): string[] {
-		return Object.keys(this.data);
+	getKeys(handler: (keys: string[]) => void) {
+		const observable = this.httpClient.get('projects');
+		observable.subscribe(result => handler(result as string[]));
 	}
 
-	get(key: string) {
-		return this.data[key];
+	get(key: string, handler: (project: Project) => void) {
+		const observable = this.httpClient.get(`projects\\${key}`);
+		observable.subscribe(result => handler(result as Project));
 	}
 
-	create(project: Project): boolean {
+	create(project: Project, handler: (result: string) => void) {
 		const key = this.getKey(project.name);
-		if (Object.keys(this.data).find(k => k === key)) {
-			// key already exists
-			return false;
-		}
-
-		this.data[key] = project;
-		return true;
+		const observable = this.httpClient.post(`projects\\${key}`, project);
+		observable.subscribe(result => handler(result as string));
 	}
 
-	delete(key: string): void {
-		delete this.data[key];
-	}
-
-	update(key: string, project: Project): void {
-		this.data[key] = project;
+	update(key: string, project: Project, handler: (result: string) => void): void {
+		const observable = this.httpClient.post(`projects\\${key}`, project);
+		observable.subscribe(result => handler(result as string));
 	}
 
 	private getKey(projectName: string): string {

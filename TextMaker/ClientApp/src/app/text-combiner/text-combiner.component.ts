@@ -27,8 +27,10 @@ export class TextCombinerComponent implements OnInit {
 
 	ngOnInit() {
 		const name = this.route.snapshot.paramMap.get('name');
-		this.project = this.textDataService.get(name);
-		this.setText();
+		this.textDataService.get(name, project => {
+			this.project = project;
+			this.setText();
+		});
 		this.date = new Date().toISOString().slice(0, 10);
 	}
 

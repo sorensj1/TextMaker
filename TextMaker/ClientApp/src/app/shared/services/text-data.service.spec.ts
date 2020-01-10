@@ -1,9 +1,12 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TextDataService } from './text-data.service';
 import { Project } from '../models';
+import { Observable } from 'rxjs';
 
 describe('Service: TextDataService', () => {
 	let textDataService: TextDataService;
+	let httpTestingController: HttpTestingController;
 
 	const myNewTeam: Project = {
 		name: 'My New Team',
@@ -28,51 +31,72 @@ describe('Service: TextDataService', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [TextDataService]
+			providers: [TextDataService],
+			imports: [HttpClientTestingModule]
 		});
+		httpTestingController = TestBed.get(HttpTestingController);
 		textDataService = TestBed.get(TextDataService);
+	});
+
+	afterEach(() => {
+		httpTestingController.verify();
 	});
 
 	describe('#getKeys', () => {
 		it('should get the keys', () => {
-			let keys = textDataService.getKeys();
-			expect(keys).toEqual(['Team1', 'Team2']);
+			const projects = ['Team 1', 'Team 2'];
+			textDataService.getKeys(keys => {
+				expect(keys).toEqual(['Team 1', 'Team 2']);
+			});
 
-			textDataService.create(myNewTeam);
-			keys = textDataService.getKeys();
-			expect(keys.length).toBe(3);
-			expect(keys).toContain('MyNewTeam');
+			const request = httpTestingController.expectOne('projects');
+			expect(request.request.method).toEqual('GET');
+			request.flush(projects);
+		});
+	});
 
-			textDataService.delete('MyNewTeam');
-			keys = textDataService.getKeys();
-			expect(keys.length).toBe(2);
-			expect(keys).not.toContain('MyNewTeam');
+	describe('#get', () => {
+		it('should get a project', () => {
+			const testProject = {
+				name: 'My Test Project'
+			};
+			textDataService.get('MyTestProject', project => {
+				expect(project.name).toEqual('My Test Project');
+			});
+
+			const request = httpTestingController.expectOne('projects\\MyTestProject');
+			expect(request.request.method).toEqual('GET');
+			request.flush(testProject);
 		});
 	});
 
 	describe('#create', () => {
-		it('should create a new team', () => {
-			expect(textDataService.create(myNewTeam)).toBe(true);
-			expect(textDataService.get('MyNewTeam')).toBe(myNewTeam);
+		it('should create a new team and handle an error', () => {
+			const testProject = <Project>{
+				name: 'My Test Project'
+			};
+			textDataService.create(testProject, result => {
+				expect(result).toBe('My test error occurred!');
+			});
 
-			// can't create it a second time
-			expect(textDataService.create(myNewTeam)).toBe(false);
-		});
-	});
-
-	describe('#delete', () => {
-		it('should delete a team', () => {
-			expect(textDataService.get('Team1')).toBeTruthy();
-			textDataService.delete('Team1');
-			expect(textDataService.get('Team1')).toBeFalsy();
+			const request = httpTestingController.expectOne('projects\\MyTestProject');
+			expect(request.request.method).toEqual('POST');
+			request.flush('My test error occurred!');
 		});
 	});
 
 	describe('#update', () => {
 		it('should update a team', () => {
-			expect(textDataService.get('Team1').name).toBe('Team 1');
-			textDataService.update('Team1', myNewTeam);
-			expect(textDataService.get('Team1').name).toBe('My New Team');
+			const testProject = <Project>{
+				name: 'My Test Project'
+			};
+			textDataService.update('MyTestProject', testProject, result => {
+				expect(result).toBe('My test error occurred!');
+			});
+
+			const request = httpTestingController.expectOne('projects\\MyTestProject');
+			expect(request.request.method).toEqual('POST');
+			request.flush('My test error occurred!');
 		});
 	});
 });

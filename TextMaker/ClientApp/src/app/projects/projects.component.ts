@@ -14,12 +14,12 @@ export class ProjectsComponent implements OnInit {
 	isDialogShown = false;
 
 	constructor(
-		private textDataService: TextDataService,
-		private messageService: MessageService
+		private messageService: MessageService,
+		private textDataService: TextDataService
 	) { }
 
 	ngOnInit() {
-		this.projectNames = this.textDataService.getKeys();
+		this.setProjectNames();
 	}
 
 	onAddClick() {
@@ -27,16 +27,22 @@ export class ProjectsComponent implements OnInit {
 	}
 
 	onProjectSaved(projectName: string) {
-		if (this.textDataService.create(<Project>{
+		this.textDataService.create(<Project>{
 			name: projectName,
 			groups: [],
 			isDateSelected: false,
 			isAutomaticallyCopied: true,
 			delimiter: ''
-		})) {
-			this.projectNames = this.textDataService.getKeys();
-		} else {
-			this.messageService.add({ severity: 'error', summary: 'Error', detail: `Could not create the new project: ${projectName}.` });
-		}
+		}, result => {
+			if (result) {
+				this.messageService.add({ severity: 'error', summary: 'Error', detail: result });
+			}
+		});
+
+		this.setProjectNames();
+	}
+
+	private setProjectNames() {
+		this.textDataService.getKeys(keys => this.projectNames = keys);
 	}
 }

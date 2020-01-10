@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProjectsComponent } from './projects.component';
 import { EditProjectModule } from './edit-project';
-import { MessageService } from 'primeng/components/common/messageservice';
 import { TextDataService } from '../shared/services';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { Project } from '../shared/models';
 
 describe('ProjectsComponent', () => {
 	let component: ProjectsComponent;
@@ -13,7 +14,10 @@ describe('ProjectsComponent', () => {
 	};
 
 	const textDataService = {
-		getKeys: jasmine.createSpy('getKeys').and.returnValue([]),
+		getKeys: jasmine.createSpy('getKeys').and.callFake(handler => handler([
+			'Project 1',
+			'Project 2'
+		])),
 		create: jasmine.createSpy('create')
 	};
 
@@ -22,8 +26,8 @@ describe('ProjectsComponent', () => {
 			imports: [EditProjectModule],
 			declarations: [ProjectsComponent],
 			providers: [
-				{ provide: TextDataService, useValue: textDataService },
-				{ provide: MessageService, useValue: messageService }
+				{ provide: MessageService, useValue: messageService },
+				{ provide: TextDataService, useValue: textDataService }
 			]
 		})
 			.compileComponents();
@@ -33,6 +37,15 @@ describe('ProjectsComponent', () => {
 		fixture = TestBed.createComponent(ProjectsComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
+	});
+
+	describe('#ngOnInit', () => {
+		it('should set the projects', () => {
+			textDataService.getKeys.calls.reset();
+			component.projectNames = [];
+			component.ngOnInit();
+			expect(component.projectNames).toEqual(['Project 1', 'Project 2']);
+		});
 	});
 
 	describe('#onAddClick', () => {
@@ -45,12 +58,17 @@ describe('ProjectsComponent', () => {
 
 	describe('#onProjectAdded', () => {
 		it('should add a new project', () => {
+			let project: Project;
 			messageService.add.calls.reset();
-			textDataService.create.calls.reset();
-			textDataService.create.and.returnValue(true);
+			textDataService.create.and.callFake((proj, handler) => {
+				project = proj;
+				handler('');
+			});
 			textDataService.getKeys.calls.reset();
+
 			component.onProjectSaved('myNewProject');
-			expect(textDataService.create).toHaveBeenCalledWith({
+
+			expect(project).toEqual(<Project>{
 				name: 'myNewProject',
 				groups: [],
 				isDateSelected: false,
@@ -61,14 +79,26 @@ describe('ProjectsComponent', () => {
 			expect(messageService.add).not.toHaveBeenCalled();
 		});
 
-		it('should generate a message if there is an error', () => {
+		it('should add a new project and handle an error', () => {
+			let project: Project;
 			messageService.add.calls.reset();
-			textDataService.create.calls.reset();
-			textDataService.create.and.returnValue(false);
+			textDataService.create.and.callFake((proj, handler) => {
+				project = proj;
+				handler('My test error occurred!');
+			});
 			textDataService.getKeys.calls.reset();
+
 			component.onProjectSaved('myNewProject');
-			expect(textDataService.getKeys).not.toHaveBeenCalled();
-			expect(messageService.add).toHaveBeenCalledWith({ severity: 'error', summary: 'Error', detail: 'Could not create the new project: myNewProject.' });
+
+			expect(project).toEqual(<Project>{
+				name: 'myNewProject',
+				groups: [],
+				isDateSelected: false,
+				isAutomaticallyCopied: true,
+				delimiter: ''
+			});
+			expect(textDataService.getKeys).toHaveBeenCalled();
+			expect(messageService.add).toHaveBeenCalledWith({ severity: 'error', summary: 'Error', detail: 'My test error occurred!' });
 		});
 	});
 });

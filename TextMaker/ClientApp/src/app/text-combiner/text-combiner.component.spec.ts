@@ -15,10 +15,6 @@ describe('TextCombinerComponent', () => {
 	let component: TextCombinerComponent;
 	let fixture: ComponentFixture<TextCombinerComponent>;
 
-	const myProject = {
-		name: 'My Project'
-	};
-
 	const activatedRoute = {
 		snapshot: {
 			paramMap: {
@@ -28,7 +24,12 @@ describe('TextCombinerComponent', () => {
 	};
 
 	const textDataService = {
-		get: jasmine.createSpy('get').and.returnValue(myProject)
+		get: jasmine.createSpy('get').and.callFake((name, handler) => {
+			const project = <Project>{
+				name: name
+			};
+			handler(project);
+		})
 	};
 
 	const textCombinerService = {
@@ -57,8 +58,9 @@ describe('TextCombinerComponent', () => {
 	describe('#ngOnInit', () => {
 		it('should create', () => {
 			expect(activatedRoute.snapshot.paramMap.get).toHaveBeenCalledWith('name');
-			expect(textDataService.get).toHaveBeenCalledWith('MyProjectName');
-			expect(component.project.name).toBe('My Project');
+			expect(textDataService.get).toHaveBeenCalled();
+			expect(textCombinerService.getCombinedText).toHaveBeenCalled();
+			expect(component.project.name).toBe('MyProjectName');
 		});
 	});
 
@@ -67,7 +69,7 @@ describe('TextCombinerComponent', () => {
 			textCombinerService.getCombinedText.calls.reset();
 			component.combinedText = '';
 			component.onGroupChange();
-			expect(textCombinerService.getCombinedText).toHaveBeenCalledWith(myProject);
+			expect(textCombinerService.getCombinedText).toHaveBeenCalledWith(component.project);
 			expect(component.combinedText).toBe('combined text');
 		});
 	});
