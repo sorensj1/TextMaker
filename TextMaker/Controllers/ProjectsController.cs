@@ -1,71 +1,60 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using TextMaker.Services;
 
 namespace TextMaker.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("api/[controller]")]
 	public class ProjectsController : ControllerBase
 	{
-		private static FileStore<Dictionary<string, Project>> _fileStore = new FileStore<Dictionary<string, Project>>();
+		private readonly ILogger<ProjectsController> _logger;
+		private readonly ProjectService _projectService;
+
+		public ProjectsController(ILogger<ProjectsController> logger, ProjectService projectService)
+		{
+			_logger = logger;
+			_projectService = projectService;
+		}
 
 		[HttpGet]
-		public string[] GetKeys()
+		public ActionResult<List<string>> Get()
 		{
-			lock (_fileStore)
-			{
-				Dictionary<string, Project> projects = _fileStore.Get();
-				return projects.Keys.ToArray();
-			}
+				_logger.LogTrace("Entering Projects Controller, fetching all keys.");
+				return Ok(_projectService.GetKeys());
 		}
 
-		[HttpGet(@"{key: string}")]
-		public Project Get(string key)
+		[HttpGet("{key:alpha}")]
+		public ActionResult<Project> GetProject(string key)
 		{
-			lock (_fileStore)
-			{
-				Dictionary<string, Project> projects = _fileStore.Get();
-				return projects[key];
-			}
+			_logger.LogTrace($"Entering Projects Controller, fetching Project for key, ${key}.");
+			return Ok(_projectService.GetProjectForKey(key));
 		}
 
-		[HttpPost(@"{key: string, project: Project}")]
-		public string Create(string key, [FromBody]Project project)
+		[HttpPost("{key:alpha}")]
+		public ActionResult Create(string key, [FromBody]Project project)
 		{
-			lock (_fileStore)
+			_logger.LogTrace($"Entering Projects Controller, creating Project with key, ${key}.");
+			if (!_projectService.CreateProjectWithKey(key, project, out string message)) 
 			{
-				Dictionary<string, Project> projects = _fileStore.Get();
-				if (projects.ContainsKey(key))
-				{
-					return @"Error: Project already exists.";
-				}
-				else
-				{
-					projects.Add(key, project);
-					_fileStore.Set(projects);
-					return string.Empty;
-				}
+				return BadRequest(message);
 			}
+
+			return Ok();
 		}
 
-		[HttpPut(@"{key: string, project: Project}")]
-		public string Update(string key, [FromBody]Project project)
+		[HttpPut("{key:alpha}")]
+		public ActionResult Update(string key, [FromBody]Project project)
 		{
-			lock (_fileStore)
+			_logger.LogTrace($"Entering Projects Controller, updating Project for key, ${key}.");
+			if (!_projectService.UpdateProjectWithKey(key, project, out string message))
 			{
-				Dictionary<string, Project> projects = _fileStore.Get();
-				if (!projects.ContainsKey(key))
-				{
-					return @"Error: Project was not found.";
-				}
-				else
-				{
-					projects[key] = project;
-					_fileStore.Set(projects);
-					return string.Empty;
-				}
+				BadRequest(message);
 			}
+
+			return Ok();
 		}
 	}
 }
