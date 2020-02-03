@@ -1,6 +1,0 @@
-<app-edit-project [(isDisplayed)]="isDialogShown" (projectSaved)="onProjectSaved($event)"></app-edit-project>
-<h2>TextMaker</h2>
-<div class="project-name" *ngFor="let projectName of projectNames">
-	<a href="./projects/{{ projectName }}">{{ projectName }}</a>
-</div>
-<button pButton type="button" icon="pi pi-plus" (click)="onAddClick()"></button>
