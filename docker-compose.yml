@@ -2,11 +2,11 @@ version: '3.7'
 services:
   app:
     build:
-      context: ./TextMaker.App
+      context: ./TextMaker.app
     ports:
       - "5051:80"
     depends_on:
       - api
   api:
     build:
-      context: ./TextMaker
+      context: ./TextMaker.api
