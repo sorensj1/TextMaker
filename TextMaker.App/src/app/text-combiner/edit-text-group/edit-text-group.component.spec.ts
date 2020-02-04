@@ -40,6 +40,7 @@ describe('EditTextGroupComponent', () => {
 
 			expect(component.isDialogShown).toBe(false);
 			component.onTextItemEdit(item1);
+			expect(component.isAdding).toBe(false);
 			expect(component.isDialogShown).toBe(true);
 			expect(component.selectedItem.name).toBe('Test Name');
 			expect(component.selectedItem.text).toBe('Test Text');
@@ -109,6 +110,7 @@ describe('EditTextGroupComponent', () => {
 
 			expect(component.isDialogShown).toBe(false);
 			component.onTextItemAdd();
+			expect(component.isAdding).toBe(true);
 			expect(component.isDialogShown).toBe(true);
 			expect(component.selectedItem.name).toBe('New Item');
 			expect(component.selectedItem.text).toBe('');

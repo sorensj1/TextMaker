@@ -1,4 +1,4 @@
-<text-maker-edit-text-item #editDialog [(isDisplayed)]="isDialogShown" [(item)]="selectedItem" (dialogClosed)="onDialogClosed($event)"></text-maker-edit-text-item>
+<text-maker-edit-text-item [(isDisplayed)]="isDialogShown" [(item)]="selectedItem" [isNew]="isAdding" (dialogClosed)="onDialogClosed($event)"></text-maker-edit-text-item>
 <div *ngIf="group">
 	<input class="name-text" type="text" pInputText [(ngModel)]="group.name" />
 	<input type="checkbox" [(ngModel)]="group.isExclusive" />Exclusive (one selected at a time)
