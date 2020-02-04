@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using System.Xml;
 
 namespace TextMaker
 {
@@ -11,9 +12,7 @@ namespace TextMaker
 	{
 		#region Non-Public Data Members
 
-		private const string BaseNodeName = @"filestore";
-
-		private XmlSerializer _serializer = new XmlSerializer(typeof(T));
+		private DataContractSerializer _serializer = new DataContractSerializer(typeof(T));
 
 		#endregion
 
@@ -40,9 +39,21 @@ namespace TextMaker
 
 		public T Get()
 		{
-			using (FileStream stream = new FileStream(FileName, FileMode.Open, FileAccess.Read))
+			if (!File.Exists(FileName))
 			{
-				return _serializer.Deserialize(stream) as T;
+				return null;
+			}
+
+			try
+			{
+				using (FileStream stream = new FileStream(FileName, FileMode.Open, FileAccess.Read))
+				{
+					return _serializer.ReadObject(stream) as T;
+				}
+			}
+			catch (XmlException)
+			{
+				return null;
 			}
 		}
 
@@ -53,7 +64,7 @@ namespace TextMaker
 		{
 			using (FileStream stream = new FileStream(FileName, FileMode.OpenOrCreate, FileAccess.Write))
 			{
-				_serializer.Serialize(stream, data);
+				_serializer.WriteObject(stream, data);
 			}
 		}
 

@@ -29,6 +29,9 @@ describe('TextCombinerComponent', () => {
 				name: name
 			};
 			handler(project);
+		}),
+		update: jasmine.createSpy('update').and.callFake((name, project, handler) => {
+			handler();
 		})
 	};
 
@@ -75,7 +78,7 @@ describe('TextCombinerComponent', () => {
 	});
 
 	describe('#onGroupMoveUp', () => {
-		it('should set isEditing to true', () => {
+		it('should move a group up in the list', () => {
 			component.project = <Project>{
 				groups: [
 					<TextItemGroup>{
@@ -97,7 +100,7 @@ describe('TextCombinerComponent', () => {
 	});
 
 	describe('#onGroupMoveDown', () => {
-		it('should set isEditing to true', () => {
+		it('should move a group down in the list', () => {
 			component.project = <Project>{
 				groups: [
 					<TextItemGroup>{
@@ -119,7 +122,7 @@ describe('TextCombinerComponent', () => {
 	});
 
 	describe('#onGroupAdd', () => {
-		it('should set isEditing to true', () => {
+		it('should add a group to an existing list', () => {
 			component.project = <Project>{
 				groups: [
 					<TextItemGroup>{
@@ -138,6 +141,14 @@ describe('TextCombinerComponent', () => {
 			expect(component.project.groups[1].name).toBe('Group 2');
 			expect(component.project.groups[2].name).toBe('New Group');
 			expect(component.project.groups[3].name).toBe('Group 3');
+		});
+
+		it('should add a group to an empty list', () => {
+			component.project = <Project>{
+				groups: []
+			};
+			component.onGroupAdd(null);
+			expect(component.project.groups[0].name).toBe('New Group');
 		});
 	});
 
@@ -185,18 +196,22 @@ describe('TextCombinerComponent', () => {
 	describe('#onEditorClosed', () => {
 		it('should just set isEditing to false when cancelled', () => {
 			textCombinerService.getCombinedText.calls.reset();
+			textDataService.update.calls.reset();
 			component.isEditing = true;
 			component.onEditorClosed(false);
 			expect(component.isEditing).toBe(false);
 			expect(textCombinerService.getCombinedText).not.toHaveBeenCalled();
+			expect(textDataService.update).not.toHaveBeenCalled();
 		});
 
 		it('should set isEditing to false and refresh the text on OK', () => {
 			textCombinerService.getCombinedText.calls.reset();
+			textDataService.update.calls.reset();
 			component.isEditing = true;
 			component.onEditorClosed(true);
 			expect(component.isEditing).toBe(false);
 			expect(textCombinerService.getCombinedText).toHaveBeenCalledWith(component.project);
+			expect(textDataService.update).toHaveBeenCalled();
 		});
 	});
 });

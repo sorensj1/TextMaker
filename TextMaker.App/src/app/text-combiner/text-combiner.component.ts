@@ -10,14 +10,11 @@ import { TextCombinerService } from './text-combiner.service';
 	styleUrls: ['./text-combiner.component.scss']
 })
 export class TextCombinerComponent implements OnInit {
-
 	project: Project;
-
 	combinedText = '';
-
 	date = '';
-
 	isEditing = false;
+	private name = '';
 
 	constructor(
 		private route: ActivatedRoute,
@@ -26,8 +23,8 @@ export class TextCombinerComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		const name = this.route.snapshot.paramMap.get('name');
-		this.textDataService.get(name, project => {
+		this.name = this.route.snapshot.paramMap.get('name');
+		this.textDataService.get(this.name, project => {
 			this.project = project;
 			this.setText();
 		});
@@ -80,6 +77,7 @@ export class TextCombinerComponent implements OnInit {
 		this.isEditing = false;
 		if (wasEdited) {
 			this.setText();
+			this.textDataService.update(this.name, this.project, () => { });
 		}
 	}
 

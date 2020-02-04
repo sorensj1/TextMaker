@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Project } from '../models';
 import { Observable } from 'rxjs';
 
@@ -26,12 +26,12 @@ private baseUri = 'api/projects';
 
 	create(project: Project, handler: (result: string) => void) {
 		const key = this.getKey(project.name);
-		const observable = this.httpClient.post(`${this.baseUri}${key}`, project);
+		const observable = this.httpClient.post(`${this.baseUri}/${key}`, project);
 		observable.subscribe(result => handler(result as string));
 	}
 
 	update(key: string, project: Project, handler: (result: string) => void): void {
-		const observable = this.httpClient.post(`${this.baseUri}${key}`, project);
+		const observable = this.httpClient.put(`${this.baseUri}/${key}`, project);
 		observable.subscribe(result => handler(result as string));
 	}
 

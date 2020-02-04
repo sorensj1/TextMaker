@@ -127,7 +127,7 @@
 		"component-class-suffix": true,
 		"directive-class-suffix": true,
 		"linebreak-style": [
-			true,
+			false,
 			"CRLF"
 		]
 	}
