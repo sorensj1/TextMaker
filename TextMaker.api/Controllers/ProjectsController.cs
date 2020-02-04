@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TextMaker.Services;
@@ -22,22 +21,22 @@ namespace TextMaker.Controllers
 		[HttpGet]
 		public ActionResult<List<string>> Get()
 		{
-				_logger.LogTrace("Entering Projects Controller, fetching all keys.");
-				return Ok(_projectService.GetKeys());
+			_logger.LogTrace(@"Entering Projects Controller, fetching all keys.");
+			return Ok(_projectService.GetKeys());
 		}
 
 		[HttpGet("{key:alpha}")]
 		public ActionResult<Project> GetProject(string key)
 		{
-			_logger.LogTrace($"Entering Projects Controller, fetching Project for key, ${key}.");
+			_logger.LogTrace($@"Entering Projects Controller, fetching Project for key, ${key}.");
 			return Ok(_projectService.GetProjectForKey(key));
 		}
 
 		[HttpPost("{key:alpha}")]
 		public ActionResult Create(string key, [FromBody]Project project)
 		{
-			_logger.LogTrace($"Entering Projects Controller, creating Project with key, ${key}.");
-			if (!_projectService.CreateProjectWithKey(key, project, out string message)) 
+			_logger.LogTrace($@"Entering Projects Controller, creating Project with key, ${key}.");
+			if (!_projectService.CreateProjectWithKey(key, project, out string message))
 			{
 				return BadRequest(message);
 			}
@@ -48,7 +47,7 @@ namespace TextMaker.Controllers
 		[HttpPut("{key:alpha}")]
 		public ActionResult Update(string key, [FromBody]Project project)
 		{
-			_logger.LogTrace($"Entering Projects Controller, updating Project for key, ${key}.");
+			_logger.LogTrace($@"Entering Projects Controller, updating Project for key, ${key}.");
 			if (!_projectService.UpdateProjectWithKey(key, project, out string message))
 			{
 				BadRequest(message);

@@ -12,6 +12,7 @@
     <div *ngIf="isEditing">
         <text-maker-edit-text-group *ngFor="let group of project.groups; index as i" [isFirst]="i === 0" [isLast]="i === (project.groups.length - 1)" [group]="group" (groupChange)="onGroupChange()"
             (groupAdd)="onGroupAdd($event)" (groupMoveUp)="onGroupMoveUp($event)" (groupMoveDown)="onGroupMoveDown($event)" (groupDelete)="onGroupDelete($event)"></text-maker-edit-text-group>
+        <button *ngIf="project.groups.length == 0" pButton type="button" icon="pi pi-plus" (click)="onGroupAdd(null)"></button>
     </div>
 </div>
 <text-maker-text-output *ngIf="!isEditing" [text]="combinedText"></text-maker-text-output>

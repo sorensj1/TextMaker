@@ -49,7 +49,7 @@ describe('Service: TextDataService', () => {
 				expect(keys).toEqual(['Team 1', 'Team 2']);
 			});
 
-			const request = httpTestingController.expectOne('projects');
+			const request = httpTestingController.expectOne('api/projects');
 			expect(request.request.method).toEqual('GET');
 			request.flush(projects);
 		});
@@ -64,7 +64,7 @@ describe('Service: TextDataService', () => {
 				expect(project.name).toEqual('My Test Project');
 			});
 
-			const request = httpTestingController.expectOne('projects\\MyTestProject');
+			const request = httpTestingController.expectOne('api/projects/MyTestProject');
 			expect(request.request.method).toEqual('GET');
 			request.flush(testProject);
 		});
@@ -79,7 +79,7 @@ describe('Service: TextDataService', () => {
 				expect(result).toBe('My test error occurred!');
 			});
 
-			const request = httpTestingController.expectOne('projects\\MyTestProject');
+			const request = httpTestingController.expectOne('api/projects/MyTestProject');
 			expect(request.request.method).toEqual('POST');
 			request.flush('My test error occurred!');
 		});
@@ -94,8 +94,8 @@ describe('Service: TextDataService', () => {
 				expect(result).toBe('My test error occurred!');
 			});
 
-			const request = httpTestingController.expectOne('projects\\MyTestProject');
-			expect(request.request.method).toEqual('POST');
+			const request = httpTestingController.expectOne('api/projects/MyTestProject');
+			expect(request.request.method).toEqual('PUT');
 			request.flush('My test error occurred!');
 		});
 	});

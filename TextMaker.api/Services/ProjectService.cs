@@ -7,11 +7,22 @@ namespace TextMaker.Services
 	{
 		private static FileStore<Dictionary<string, Project>> _fileStore = new FileStore<Dictionary<string, Project>>();
 
+		private Dictionary<string, Project> Get()
+		{
+			Dictionary<string, Project> projects = _fileStore.Get();
+			if (projects == null)
+			{
+				projects = new Dictionary<string, Project>();
+			}
+
+			return projects;
+		}
+
 		public List<string> GetKeys()
 		{
 			lock (_fileStore)
 			{
-				Dictionary<string, Project> projects = _fileStore.Get();
+				Dictionary<string, Project> projects = Get();
 				return projects.Keys.ToList();
 			}
 		}
@@ -20,7 +31,12 @@ namespace TextMaker.Services
 		{
 			lock (_fileStore)
 			{
-				Dictionary<string, Project> projects = _fileStore.Get();
+				Dictionary<string, Project> projects = Get();
+				if (!projects.ContainsKey(key))
+				{
+					return null;
+				}
+
 				return projects[key];
 			}
 		}
@@ -30,7 +46,7 @@ namespace TextMaker.Services
 			message = string.Empty;
 			lock (_fileStore)
 			{
-				Dictionary<string, Project> projects = _fileStore.Get();
+				Dictionary<string, Project> projects = Get();
 				if (projects.ContainsKey(key))
 				{
 					message = @"Error: Project already exists.";
@@ -50,7 +66,7 @@ namespace TextMaker.Services
 			message = string.Empty;
 			lock (_fileStore)
 			{
-				Dictionary<string, Project> projects = _fileStore.Get();
+				Dictionary<string, Project> projects = Get();
 				if (!projects.ContainsKey(key))
 				{
 					message = @"Error: Project was not found.";
