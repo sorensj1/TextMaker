@@ -9,6 +9,7 @@ button {
 
 .text-item-buttons {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .is-exclusive {

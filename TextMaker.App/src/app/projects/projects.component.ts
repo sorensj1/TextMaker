@@ -37,9 +37,8 @@ export class ProjectsComponent implements OnInit {
 			if (result) {
 				this.messageService.add({ severity: 'error', summary: 'Error', detail: result });
 			}
+			this.setProjectNames();
 		});
-
-		this.setProjectNames();
 	}
 
 	private setProjectNames() {

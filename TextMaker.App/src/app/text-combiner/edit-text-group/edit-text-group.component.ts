@@ -7,27 +7,19 @@ import { TextItemGroup, TextItem } from 'src/app/shared/models';
 	styleUrls: ['./edit-text-group.component.scss']
 })
 export class EditTextGroupComponent {
-
 	@Input() isFirst: boolean;
-
 	@Input() isLast: boolean;
-
 	@Input() group: TextItemGroup;
 
 	@Output() groupChange = new EventEmitter<TextItemGroup>();
-
 	@Output() groupMoveUp = new EventEmitter<TextItemGroup>();
-
 	@Output() groupMoveDown = new EventEmitter<TextItemGroup>();
-
 	@Output() groupAdd = new EventEmitter<TextItemGroup>();
-
 	@Output() groupDelete = new EventEmitter<TextItemGroup>();
 
 	isDialogShown = false;
-
+	isAdding = false;
 	selectedItem: TextItem = null;
-
 	private itemToSave: TextItem = null;
 
 	constructor() { }
@@ -38,6 +30,7 @@ export class EditTextGroupComponent {
 			name: item.name,
 			text: item.text
 		};
+		this.isAdding = false;
 		this.isDialogShown = true;
 	}
 
@@ -46,6 +39,7 @@ export class EditTextGroupComponent {
 			name: 'New Item',
 			text: ''
 		};
+		this.isAdding = true;
 		this.isDialogShown = true;
 	}
 
