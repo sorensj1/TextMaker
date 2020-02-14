@@ -27,6 +27,8 @@ export class TextOutputComponent {
 	constructor() { }
 
 	copyToClipboard() {
-		navigator.clipboard.writeText(this.text);
+		if (navigator.clipboard) {
+			navigator.clipboard.writeText(this.text);
+		}
 	}
 }

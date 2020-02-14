@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TextDataService } from './text-data.service';
 import { Project } from '../models';
-import { Observable } from 'rxjs';
 
 describe('Service: TextDataService', () => {
 	let textDataService: TextDataService;
