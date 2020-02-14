@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Project, TextItemGroup } from '../shared/models';
-import { TextDataService } from '../shared/services';
+import { TextDataService, FormatDateService } from '../shared/services';
 import { TextCombinerService } from './text-combiner.service';
 
 @Component({
@@ -19,6 +19,7 @@ export class TextCombinerComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private textDataService: TextDataService,
+		private formatDateService: FormatDateService,
 		private textCombinerService: TextCombinerService
 	) { }
 
@@ -28,7 +29,7 @@ export class TextCombinerComponent implements OnInit {
 			this.project = project;
 			this.setText();
 		});
-		this.date = new Date().toISOString().slice(0, 10);
+		this.date = this.formatDateService.format(new Date());
 	}
 
 	onGroupChange() {

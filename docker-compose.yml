@@ -4,7 +4,9 @@ services:
     build:
       context: ./TextMaker.app
     ports:
-      - "5051:80"
+      - "5051:443"
+    volumes:
+      - ./data/certs:/etc/nginx/certs
     depends_on:
       - api
   api:

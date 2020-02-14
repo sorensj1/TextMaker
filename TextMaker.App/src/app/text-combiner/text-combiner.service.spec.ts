@@ -2,7 +2,10 @@ import { TextCombinerService } from './text-combiner.service';
 import { Project } from '../shared/models';
 
 describe('Service: TextCombinerService', () => {
-	let service: TextCombinerService;
+	let textCombinerService: TextCombinerService;
+	const formatDateService = {
+		format: (date: Date) => '1-Jan-1970'
+	};
 
 	const myNewTeam: Project = {
 		name: 'My New Team',
@@ -49,34 +52,33 @@ describe('Service: TextCombinerService', () => {
 	};
 
 	beforeEach(() => {
-		service = new TextCombinerService();
+		textCombinerService = new TextCombinerService(formatDateService);
 	});
 	describe('#transform', () => {
 		it('should handle a null project', () => {
-			expect(service.getCombinedText(null)).toBe('');
+			expect(textCombinerService.getCombinedText(null)).toBe('');
 		});
 
 		it('should combine text for a project with no date', () => {
 			myNewTeam.isDateSelected = false;
 			myNewTeam.groups[0].items[0].isSelected = false;
-			expect(service.getCombinedText(myNewTeam)).toBe('The second item.\nThe third item.');
+			expect(textCombinerService.getCombinedText(myNewTeam)).toBe('The second item.\nThe third item.');
 		});
 
 		it('should combine text for a project with a date', () => {
-			spyOn(Date.prototype, 'toISOString').and.returnValue('1970-1-1');
 			myNewTeam.isDateSelected = true;
 			myNewTeam.groups[0].items[0].isSelected = false;
-			expect(service.getCombinedText(myNewTeam)).toBe('1970-1-1 The second item.\nThe third item.');
+			expect(textCombinerService.getCombinedText(myNewTeam)).toBe('1-Jan-1970 The second item.\nThe third item.');
 		});
 
 		it('should add delimiters between items', () => {
 			myNewTeam.isDateSelected = false;
 			myNewTeam.groups[0].items[0].isSelected = true;
 			myNewTeam.groups[0].delimiter = '';
-			expect(service.getCombinedText(myNewTeam)).toBe('The first item.The second item.\nThe third item.');
+			expect(textCombinerService.getCombinedText(myNewTeam)).toBe('The first item.The second item.\nThe third item.');
 
 			myNewTeam.groups[0].delimiter = ', ';
-			expect(service.getCombinedText(myNewTeam)).toBe('The first item., The second item.\nThe third item.');
+			expect(textCombinerService.getCombinedText(myNewTeam)).toBe('The first item., The second item.\nThe third item.');
 		});
 	});
 });

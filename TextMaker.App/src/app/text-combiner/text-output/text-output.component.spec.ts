@@ -48,5 +48,13 @@ describe('TextOutputComponent', () => {
 			component.copyToClipboard();
 			expect(clipboardSpy).toHaveBeenCalledWith('some text to copy');
 		});
+
+		it('should not crash if clipboard is null', () => {
+			const clipboardSpy = spyOnProperty(navigator, 'clipboard').and.returnValue(null);
+			component.isAutoCopying = false;
+			component.text = 'some text to copy';
+			component.copyToClipboard();
+			expect(clipboardSpy).toHaveBeenCalledWith();
+		});
 	});
 });
