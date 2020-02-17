@@ -1,6 +1,8 @@
 import { Project, TextItemGroup, TextItem } from '../shared/models';
 import { FormatDateService } from '../shared/services';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class TextCombinerService {
 
 	constructor(
