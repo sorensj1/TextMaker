@@ -1,5 +1,7 @@
 import { TextCombinerService } from './text-combiner.service';
 import { Project } from '../shared/models';
+import { TestBed } from '@angular/core/testing';
+import { FormatDateService } from '../shared/services';
 
 describe('Service: TextCombinerService', () => {
 	let textCombinerService: TextCombinerService;
@@ -52,7 +54,10 @@ describe('Service: TextCombinerService', () => {
 	};
 
 	beforeEach(() => {
-		textCombinerService = new TextCombinerService(formatDateService);
+		TestBed.configureTestingModule({
+			providers: [TextCombinerService, { provide: FormatDateService, useValue: formatDateService }]
+		});
+		textCombinerService = TestBed.get(TextCombinerService);
 	});
 	describe('#transform', () => {
 		it('should handle a null project', () => {
