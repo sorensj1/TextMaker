@@ -26,17 +26,45 @@ describe('EditProjectComponent', () => {
 	});
 
 	describe('#onYesClick', () => {
-		it('should set the dialog to appear', () => {
+		it('should close the dialog and save the project', () => {
 			component.isDisplayed = true;
+			component.name = 'test';
+			let emittedName = '';
+			component.projectSaved.subscribe(projName => {
+				emittedName = projName;
+			});
 			component.onYesClick();
+
+			expect(emittedName).toBe('test');
+			component.projectSaved.unsubscribe();
 			expect(component.isDisplayed).toBe(false);
 		});
 	});
 
 	describe('#onNoClick', () => {
-		it('should set the dialog to appear', () => {
+		it('should close the dialog', () => {
 			component.isDisplayed = true;
+			component.name = 'test';
+			let emittedName = '';
+			component.projectSaved.subscribe(projName => {
+				emittedName = projName;
+			});
 			component.onNoClick();
+
+			expect(emittedName).toBe('');
+			component.projectSaved.unsubscribe();
+			expect(component.isDisplayed).toBe(false);
+		});
+	});
+
+	describe('#onKeyPress', () => {
+		it('should save if enter is pressed', () => {
+			component.isDisplayed = true;
+
+			component.onKeyPress(<KeyboardEvent>{ key: 'Esc' });
+			expect(component.isDisplayed).toBe(true);
+
+			component.onKeyPress(<KeyboardEvent>{ key: 'Enter' });
 			expect(component.isDisplayed).toBe(false);
 		});
 	});

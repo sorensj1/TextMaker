@@ -81,4 +81,26 @@ describe('EditTextItemComponent', () => {
 			expect(emitVal).toBe(false);
 		});
 	});
+
+	describe('#onKeyPress', () => {
+		it('should save if enter is pressed', () => {
+			component.isDisplayed = true;
+
+			let wasCalled = false;
+			let emitVal = false;
+			component.isDisplayed = true;
+			component.dialogClosed.subscribe(val => {
+				wasCalled = true;
+				emitVal = val;
+			});
+
+			component.onKeyPress(<KeyboardEvent>{ key: 'Esc' });
+			expect(wasCalled).toBe(false);
+			expect(emitVal).toBe(false);
+
+			component.onKeyPress(<KeyboardEvent>{ key: 'Enter' });
+			expect(wasCalled).toBe(true);
+			expect(emitVal).toBe(true);
+		});
+	});
 });

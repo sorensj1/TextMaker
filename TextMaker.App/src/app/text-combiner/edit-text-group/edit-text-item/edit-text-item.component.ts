@@ -35,4 +35,10 @@ export class EditTextItemComponent implements OnInit {
 	onNoClick() {
 		this.dialogClosed.emit(false);
 	}
+
+	onKeyPress(event: KeyboardEvent) {
+		if (event.key === "Enter") {
+			this.dialogClosed.emit(true);
+		}
+	}
 }

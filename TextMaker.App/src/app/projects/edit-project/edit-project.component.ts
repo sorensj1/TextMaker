@@ -31,4 +31,10 @@ export class EditProjectComponent implements OnInit {
 		this.isDisplayed = false;
 		this.isDisplayedChange.emit(this.isDisplayed);
 	}
+
+	onKeyPress(event: KeyboardEvent) {
+		if (event.key === "Enter") {
+			this.onYesClick();
+		}
+	}
 }

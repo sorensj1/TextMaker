@@ -1,8 +1,8 @@
-version: '3.7'
+version: "2"
 services:
   app:
     build:
-      context: ./TextMaker.app
+      context: ./TextMaker.App
     ports:
       - "5051:443"
     volumes:
@@ -11,4 +11,4 @@ services:
       - api
   api:
     build:
-      context: ./TextMaker.api
+      context: ./TextMaker.Api

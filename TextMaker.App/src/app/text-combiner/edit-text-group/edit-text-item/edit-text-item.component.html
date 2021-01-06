@@ -1,6 +1,6 @@
 <p-dialog header="{{isNew ? 'New Item' : 'Edit Item'}}" [(visible)]="isDisplayed" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [baseZIndex]="10000" (onHide)="onNoClick()">
-    <input class="item-name" type="text" pInputText [(ngModel)]="item && item.name" />
-    <input class="item-text" type="text" pInputText [(ngModel)]="item && item.text" />
+    <input class="item-name" type="text" pInputText [(ngModel)]="item && item.name" (click)="$event.target.select()" (keypress)="onKeyPress($event)" />
+    <textarea class="item-text" type="text" pInputTextArea [(ngModel)]="item && item.text" [rows]="5" [cols]="50" (click)="$event.target.select()" (keypress)="onKeyPress($event)"></textarea>
     <p-footer>
         <button *ngIf="!isNew" pButton type="button" icon="pi pi-times" class="ui-button-danger" (click)="onDeleteClick()" label="Delete"></button>
         <button pButton type="button" icon="pi pi-check" (click)="onYesClick()" label="OK"></button>
