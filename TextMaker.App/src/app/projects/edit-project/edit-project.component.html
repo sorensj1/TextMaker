@@ -1,5 +1,5 @@
 <p-dialog header="Add Project" [(visible)]="isDisplayed" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [baseZIndex]="10000">
-		<input type="text" pInputText [(ngModel)]="name" />
+		<input type="text" pInputText [(ngModel)]="name" (keypress)="onKeyPress($event)" />
         <p-footer>
             <button pButton type="button" icon="pi pi-check" (click)="onYesClick()" label="OK"></button>
             <button pButton type="button" icon="pi pi-times" (click)="onNoClick()" label="Cancel"></button>

@@ -46,12 +46,11 @@ namespace TextMaker
 
 			try
 			{
-				using (FileStream stream = new FileStream(FileName, FileMode.Open, FileAccess.Read))
-				{
-					return _serializer.ReadObject(stream) as T;
-				}
+				using FileStream stream = new FileStream(FileName, FileMode.Open, FileAccess.Read);
+				using XmlTextReader reader = new XmlTextReader(stream);
+				return _serializer.ReadObject(reader) as T;
 			}
-			catch (XmlException)
+			catch (SerializationException)
 			{
 				return null;
 			}
@@ -62,10 +61,9 @@ namespace TextMaker
 		/// </summary>
 		public void Set(T data)
 		{
-			using (FileStream stream = new FileStream(FileName, FileMode.OpenOrCreate, FileAccess.Write))
-			{
-				_serializer.WriteObject(stream, data);
-			}
+			using FileStream stream = new FileStream(FileName, FileMode.OpenOrCreate, FileAccess.Write);
+			using XmlWriter writer = XmlWriter.Create(stream, new XmlWriterSettings() { Indent = true });
+			_serializer.WriteObject(writer, data);
 		}
 
 		/// <summary>
