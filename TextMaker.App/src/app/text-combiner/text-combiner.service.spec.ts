@@ -47,6 +47,19 @@ describe('Service: TextCombinerService', () => {
 				isExclusive: false,
 				isOnNewLine: true,
 				delimiter: ', '
+			},
+			{
+				name: 'Group 4',
+				items: [
+					{
+						name: 'Item 5',
+						text: 'The fifth item.',
+						isSelected: false
+					}
+				],
+				isExclusive: false,
+				isOnNewLine: false,
+				delimiter: ', '
 			}
 		],
 		isAutomaticallyCopied: false,
@@ -67,23 +80,46 @@ describe('Service: TextCombinerService', () => {
 		it('should combine text for a project with no date', () => {
 			myNewTeam.isDateSelected = false;
 			myNewTeam.groups[0].items[0].isSelected = false;
+			myNewTeam.groups[0].items[1].isSelected = true;
+			myNewTeam.groups[1].items[0].isSelected = true;
+			myNewTeam.groups[1].items[1].isSelected = false;
+			myNewTeam.groups[2].items[0].isSelected = false;
 			expect(textCombinerService.getCombinedText(myNewTeam)).toBe('The second item.\nThe third item.');
 		});
 
 		it('should combine text for a project with a date', () => {
 			myNewTeam.isDateSelected = true;
 			myNewTeam.groups[0].items[0].isSelected = false;
+			myNewTeam.groups[0].items[1].isSelected = true;
+			myNewTeam.groups[1].items[0].isSelected = true;
+			myNewTeam.groups[1].items[1].isSelected = false;
+			myNewTeam.groups[2].items[0].isSelected = false;
 			expect(textCombinerService.getCombinedText(myNewTeam)).toBe('1-Jan-1970 The second item.\nThe third item.');
 		});
 
 		it('should add delimiters between items', () => {
 			myNewTeam.isDateSelected = false;
 			myNewTeam.groups[0].items[0].isSelected = true;
+			myNewTeam.groups[0].items[1].isSelected = true;
+			myNewTeam.groups[1].items[0].isSelected = true;
+			myNewTeam.groups[1].items[1].isSelected = false;
+			myNewTeam.groups[2].items[0].isSelected = false;
 			myNewTeam.groups[0].delimiter = '';
 			expect(textCombinerService.getCombinedText(myNewTeam)).toBe('The first item.The second item.\nThe third item.');
 
 			myNewTeam.groups[0].delimiter = ', ';
 			expect(textCombinerService.getCombinedText(myNewTeam)).toBe('The first item., The second item.\nThe third item.');
+		});
+
+		it('should not add add a new line if the group has no elements', () => {
+			myNewTeam.isDateSelected = false;
+			myNewTeam.groups[0].items[0].isSelected = true;
+			myNewTeam.groups[0].items[1].isSelected = false;
+			myNewTeam.groups[1].items[0].isSelected = false;
+			myNewTeam.groups[1].items[1].isSelected = false;
+			myNewTeam.groups[2].items[0].isSelected = true;
+			myNewTeam.groups[0].delimiter = '';
+			expect(textCombinerService.getCombinedText(myNewTeam)).toBe('The first item.The fifth item.');
 		});
 	});
 });
