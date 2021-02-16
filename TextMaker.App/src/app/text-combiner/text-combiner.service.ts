@@ -16,7 +16,7 @@ export class TextCombinerService {
 				output = this.formatDateService.format(new Date()) + ' ';
 			}
 			project.groups.forEach((group: TextItemGroup) => {
-				if (group.isOnNewLine) {
+				if (group.isOnNewLine && group.items.find((item: TextItem) => item.isSelected)) {
 					output += '\n';
 				}
 				let hasDelimitedItems = false;
